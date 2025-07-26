@@ -127,5 +127,100 @@
       "In Progress": "In Progress",
       "Pending": "Pending"
     }
+  },
+  "services": {
+    "title": "Agricultural Services",
+    "subtitle": "Access professional agricultural services to improve your farming practices and increase productivity.",
+    "weatherForecast": {
+      "title": "Weather Forecast",
+      "description": "Get detailed weather forecasts and alerts to plan your farming activities effectively.",
+      "features": {
+        "daily": "7-day detailed forecast",
+        "alerts": "Severe weather alerts",
+        "location": "Location-based predictions",
+        "farming": "Farming-specific advice"
+      },
+      "button": "View Weather"
+    },
+    "communityAI": {
+      "title": "Community AI Chat",
+      "description": "Connect with AI-powered farming assistant and join community discussions for expert advice.",
+      "features": {
+        "chat": "AI farming assistant",
+        "expert": "Expert recommendations",
+        "knowledge": "Community knowledge base",
+        "support": "24/7 support available"
+      },
+      "button": "Join Community"
+    },
+    "voiceAssistant": {
+      "title": "Voice Assistant",
+      "description": "Convert your voice to text in multiple Indian languages for easier input and accessibility.",
+      "features": {
+        "recognition": "Advanced voice recognition",
+        "language": "Multiple languages",
+        "commands": "Voice commands support",
+        "accessibility": "Enhanced accessibility"
+      },
+      "button": "Try Voice Assistant",
+      "modalTitle": "Voice Assistant",
+      "outputLabel": "Recognized text will appear here",
+      "placeholder": "Your speech will be converted to text here...",
+      "startButton": "Start Listening",
+      "listeningButton": "Listening...",
+      "stopButton": "Stop",
+      "clearButton": "Clear Text"
+    },
+    "marketPrices": {
+      "title": "Market Prices",
+      "description": "Get real-time crop prices from multiple markets to make informed selling decisions.",
+      "features": {
+        "live": "Live price updates",
+        "multiple": "Multiple market data",
+        "trends": "Price trend analysis",
+        "alerts": "Price alert notifications"
+      },
+      "button": "View Prices"
+    },
+    "governmentSchemes": {
+      "title": "Government Schemes",
+      "description": "Explore and apply for government subsidies, loans, and schemes for farmers.",
+      "features": {
+        "subsidies": "Subsidy information",
+        "loans": "Agricultural loans",
+        "application": "Easy application process",
+        "status": "Application status tracking"
+      },
+      "button": "View Schemes",
+      "modalTitle": "Government Schemes for Farmers",
+      "scheme1Title": "PM-KISAN Samman Nidhi",
+      "scheme1Description": "Direct income support of ₹6,000 per year to eligible farmer families.",
+      "scheme2Title": "Kisan Credit Card (KCC)",
+      "scheme2Description": "Provides adequate and timely credit support for agricultural needs.",
+      "scheme3Title": "Pradhan Mantri Fasal Bima Yojana",
+      "scheme3Description": "Crop insurance scheme providing financial support in case of crop loss."
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "step1Title": "Choose Service",
+      "step1Description": "Select the agricultural service that best fits your needs from our comprehensive list.",
+      "step2Title": "Access & Use",
+      "step2Description": "Use the service directly or get connected to the relevant page for detailed information.",
+      "step3Title": "Get Results",
+      "step3Description": "Receive professional service and detailed information to improve your farming practices."
+    }
+  },
+  "voiceAssistant": {
+    "title": "Voice Assistant",
+    "subtitle": "Talk to our AI farming assistant and get instant help with your agricultural questions",
+    "welcomeMessage": "Welcome! Start speaking to chat with your AI farming assistant.",
+    "instructionMessage": "Press the microphone button and ask questions about farming, weather, market prices, or any agricultural topic.",
+    "aiName": "Krishi AI",
+    "transcribing": "Transcribing",
+    "listening": "Listening... Speak now",
+    "clickToTalk": "Click microphone to start talking",
+    "notSupported": "Speech recognition not supported in this browser",
+    "clearChat": "Clear Chat",
+    "selectLanguage": "Select your preferred language for voice input"
   }
 }

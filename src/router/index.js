@@ -6,6 +6,7 @@ import MarketPrices from '../views/MarketPrices.vue'
 import Community from '../views/Community.vue'
 import Profile from '../views/Profile.vue'
 import Login from '../views/Login.vue'
+import VoiceAssistant from '../views/VoiceAssistant.vue'
 
 const routes = [
   {
@@ -38,6 +39,11 @@ const routes = [
     path: '/community',
     name: 'Community',
     component: Community
+  },
+  {
+    path: '/voice-assistant',
+    name: 'VoiceAssistant',
+    component: VoiceAssistant
   },
   {
     path: '/profile',
