@@ -42,26 +42,10 @@
               </div>
               <h2 class="text-xl font-bold text-gray-900">{{ user.name }}</h2>
               <p class="text-gray-600">{{ user.location }}</p>
-              <div class="mt-4 space-y-2">
+              <div class="mt-4">
                 <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
                   Verified Farmer
                 </span>
-                <div v-if="user.email_verified" class="flex items-center justify-center">
-                  <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium flex items-center">
-                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                    </svg>
-                    Email Verified
-                  </span>
-                </div>
-                <div v-else class="flex items-center justify-center">
-                  <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-medium flex items-center">
-                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                      <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
-                    </svg>
-                    Email Pending
-                  </span>
-                </div>
               </div>
             </div>
 
@@ -105,24 +89,6 @@
             <div class="p-6">
               <form @submit.prevent="saveProfile">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">User ID</label>
-                    <input 
-                      :value="user.uid"
-                      type="text" 
-                      disabled
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-600 text-sm"
-                    >
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Email Verified</label>
-                    <input 
-                      :value="user.email_verified ? 'Yes' : 'No'"
-                      type="text" 
-                      disabled
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-600"
-                    >
-                  </div>
                   <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
                     <input 
