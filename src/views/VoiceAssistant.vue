@@ -26,6 +26,12 @@
             </svg>
             <p class="text-lg">{{ $t('voiceAssistant.welcomeMessage') }}</p>
             <p class="text-sm mt-2">{{ $t('voiceAssistant.instructionMessage') }}</p>
+            <div v-if="!isConnected" class="mt-4">
+              <div class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-yellow-100 text-yellow-800">
+                <div class="w-2 h-2 bg-yellow-400 rounded-full mr-2 animate-pulse"></div>
+                Connecting to AI assistant...
+              </div>
+            </div>
           </div>
 
           <!-- Messages -->
@@ -51,6 +57,14 @@
                 </div>
                 <p>{{ message.text }}</p>
                 <div class="text-xs mt-2 text-gray-500">{{ formatTime(message.timestamp) }}</div>
+              </div>
+            </div>
+
+            <!-- System Messages -->
+            <div v-if="message.type === 'system'" class="flex justify-center">
+              <div class="bg-blue-50 text-blue-800 rounded-lg p-3 max-w-xs lg:max-w-md text-center border border-blue-200">
+                <p class="text-sm">{{ message.text }}</p>
+                <div class="text-xs mt-1 text-blue-600">{{ formatTime(message.timestamp) }}</div>
               </div>
             </div>
 
@@ -85,33 +99,47 @@
           <div class="flex items-center justify-center space-x-4">
             <!-- Microphone Button -->
             <button
-              @click="toggleListening"
+              @click="toggleConversation"
               :class="[
                 'w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 transform',
-                isListening 
-                  ? 'bg-red-500 hover:bg-red-600 scale-110 animate-pulse' 
+                isConnected 
+                  ? 'bg-red-500 hover:bg-red-600 scale-110' 
                   : 'bg-primary hover:bg-green-600 hover:scale-105'
               ]"
-              :disabled="!speechSupported"
+              :disabled="connectionStatus === 'connecting'"
             >
-              <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path v-if="!isListening" d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4z"/>
-                <path v-if="!isListening" d="M5.5 9.643a.75.75 0 00-1.5 0V10c0 3.06 2.29 5.585 5.25 5.954V17.5h-1.5a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-1.5v-1.546A6.001 6.001 0 0016 10v-.357a.75.75 0 00-1.5 0V10a4.5 4.5 0 01-9 0v-.357z"/>
-                <path v-if="isListening" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a2 2 0 114 0v4a2 2 0 11-4 0V7z" clip-rule="evenodd"/>
+              <svg v-if="!isConnected" class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4z"/>
+                <path d="M5.5 9.643a.75.75 0 00-1.5 0V10c0 3.06 2.29 5.585 5.25 5.954V17.5h-1.5a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-1.5v-1.546A6.001 6.001 0 0016 10v-.357a.75.75 0 00-1.5 0V10a4.5 4.5 0 01-9 0v-.357z"/>
+              </svg>
+              <svg v-else class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a2 2 0 114 0v4a2 2 0 11-4 0V7z" clip-rule="evenodd"/>
               </svg>
             </button>
 
             <!-- Status Text -->
             <div class="text-center">
-              <p v-if="!speechSupported" class="text-red-500 text-sm">
-                {{ $t('voiceAssistant.notSupported') }}
+              <p v-if="connectionStatus === 'connecting'" class="text-blue-500 text-sm">
+                {{ $t('voiceAssistant.connecting') }}
               </p>
-              <p v-else-if="isListening" class="text-red-500 text-sm font-medium">
-                {{ $t('voiceAssistant.listening') }}
+              <p v-else-if="isConnected" class="text-green-500 text-sm">
+                {{ $t('voiceAssistant.connected') }}
               </p>
-              <p v-else class="text-gray-600 text-sm">
-                {{ $t('voiceAssistant.clickToTalk') }}
+              <p v-else class="text-gray-500 text-sm">
+                {{ $t('voiceAssistant.disconnected') }}
               </p>
+              <button
+                @click="toggleConversation"
+                :class="[
+                  'mt-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors',
+                  isConnected 
+                    ? 'bg-red-100 text-red-700 hover:bg-red-200' 
+                    : 'bg-primary text-white hover:bg-green-600'
+                ]"
+                :disabled="connectionStatus === 'connecting'"
+              >
+                {{ isConnected ? $t('voiceAssistant.stopConversation') : $t('voiceAssistant.startConversation') }}
+              </button>
             </div>
 
             <!-- Clear Chat Button -->
@@ -154,8 +182,12 @@
 
 <script setup>
 import { ref, onMounted, nextTick, onUnmounted } from 'vue'
+import { Conversation } from '@elevenlabs/client'
 import AppHeader from '../components/AppHeader.vue'
 import AppFooter from '../components/AppFooter.vue'
+
+// Configuration
+const ELEVENLABS_AGENT_ID = import.meta.env.VITE_ELEVENLABS_AGENT_ID || 'demo-agent-id'
 
 // Reactive state
 const messages = ref([])
@@ -164,153 +196,165 @@ const currentTranscription = ref('')
 const speechSupported = ref(false)
 const selectedLanguage = ref('hi-IN')
 const chatContainer = ref(null)
+const isConnected = ref(false)
+const connectionStatus = ref('disconnected')
+const agentMode = ref('listening')
 
-// Speech recognition setup
-let recognition = null
+// ElevenLabs conversation instance
+let conversation = null
 
-onMounted(() => {
-  // Check for speech recognition support
-  if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-    speechSupported.value = true
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
-    recognition = new SpeechRecognition()
-    
-    // Configure recognition
-    recognition.continuous = false
-    recognition.interimResults = true
-    recognition.lang = selectedLanguage.value
-    
-    // Event handlers
-    recognition.onstart = () => {
-      isListening.value = true
-      currentTranscription.value = ''
-    }
-    
-    recognition.onresult = (event) => {
-      let interimTranscript = ''
-      let finalTranscript = ''
-      
-      for (let i = event.resultIndex; i < event.results.length; i++) {
-        const transcript = event.results[i][0].transcript
-        if (event.results[i].isFinal) {
-          finalTranscript += transcript
-        } else {
-          interimTranscript += transcript
-        }
-      }
-      
-      currentTranscription.value = interimTranscript
-      
-      if (finalTranscript) {
-        handleUserMessage(finalTranscript.trim())
-      }
-    }
-    
-    recognition.onerror = (event) => {
-      console.error('Speech recognition error:', event.error)
-      isListening.value = false
-      currentTranscription.value = ''
-    }
-    
-    recognition.onend = () => {
-      isListening.value = false
-      currentTranscription.value = ''
-    }
-  }
-})
-
-onUnmounted(() => {
-  if (recognition) {
-    recognition.stop()
-  }
-})
-
-// Methods
-const toggleListening = () => {
-  if (!speechSupported.value) return
+onMounted(async () => {
+  // Check for speech recognition support (for fallback)
+  speechSupported.value = 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window
   
-  if (isListening.value) {
-    recognition.stop()
-  } else {
-    recognition.start()
+  // Add welcome message
+  addSystemMessage('Welcome to Voice Assistant! Click "Start Conversation" to begin chatting with your AI farming assistant.')
+})
+
+onUnmounted(async () => {
+  if (conversation) {
+    await conversation.endSession()
+  }
+})
+
+// Initialize ElevenLabs Conversation
+const initializeConversation = async () => {
+  try {
+    // Check if agent ID is configured
+    if (!ELEVENLABS_AGENT_ID || ELEVENLABS_AGENT_ID === 'demo-agent-id') {
+      addSystemMessage('ElevenLabs Agent ID not configured. Please set up your agent ID in the environment variables.')
+      return
+    }
+    
+    // Set connecting state
+    connectionStatus.value = 'connecting'
+    addSystemMessage('Connecting to voice assistant...')
+    
+    // Request microphone access first
+    await navigator.mediaDevices.getUserMedia({ audio: true })
+    
+    // Initialize conversation with ElevenLabs
+    conversation = await Conversation.startSession({
+      agentId: ELEVENLABS_AGENT_ID,
+      
+      // Callbacks
+      onConnect: () => {
+        console.log('ElevenLabs conversation connected')
+        isConnected.value = true
+        connectionStatus.value = 'connected'
+        addSystemMessage('Connected to AI assistant! You can start speaking now.')
+      },
+      
+      onDisconnect: () => {
+        console.log('ElevenLabs conversation disconnected')
+        isConnected.value = false
+        connectionStatus.value = 'disconnected'
+        addSystemMessage('Disconnected from AI assistant.')
+      },
+      
+      onMessage: (message) => {
+        console.log('Received message:', message)
+        
+        // Handle different message types
+        if (message.type === 'user_transcript') {
+          // User's speech transcription
+          if (message.message && message.message.trim()) {
+            currentTranscription.value = message.message
+            
+            // Add user message when transcription is final
+            if (message.is_final) {
+              addMessage('user', message.message)
+              currentTranscription.value = ''
+            }
+          }
+        } else if (message.type === 'agent_response') {
+          // AI agent's text response
+          if (message.message && message.message.trim()) {
+            addMessage('ai', message.message)
+          }
+        }
+      },
+      
+      onError: (error) => {
+        console.error('ElevenLabs conversation error:', error)
+        addSystemMessage(`Error: ${error.message || 'Connection failed'}`)
+      },
+      
+      onStatusChange: (status) => {
+        console.log('Status changed:', status)
+        connectionStatus.value = status
+      },
+      
+      onModeChange: (mode) => {
+        console.log('Mode changed:', mode)
+        agentMode.value = mode
+        isListening.value = mode === 'listening'
+      }
+    })
+    
+  } catch (error) {
+    console.error('Failed to initialize conversation:', error)
+    isConnected.value = false
+    connectionStatus.value = 'disconnected'
+    
+    if (error.name === 'NotAllowedError') {
+      addSystemMessage('Microphone permission denied. Please enable microphone access and try again.')
+    } else if (error.name === 'NotFoundError') {
+      addSystemMessage('No microphone found. Please connect a microphone and try again.')
+    } else {
+      addSystemMessage('Failed to connect to AI assistant. Please check your connection and try again.')
+    }
   }
 }
 
-const handleUserMessage = async (text) => {
-  if (!text.trim()) return
+// Methods
+const toggleConversation = async () => {
+  if (connectionStatus.value === 'connecting') {
+    return // Prevent multiple clicks while connecting
+  }
   
-  // Add user message
-  const userMessage = {
-    type: 'user',
+  if (isConnected.value) {
+    // Stop conversation
+    try {
+      if (conversation) {
+        await conversation.endSession()
+        conversation = null
+      }
+      isConnected.value = false
+      connectionStatus.value = 'disconnected'
+      addSystemMessage('Voice conversation stopped.')
+    } catch (error) {
+      console.error('Error stopping conversation:', error)
+      addSystemMessage('Error stopping conversation.')
+    }
+  } else {
+    // Start conversation
+    await initializeConversation()
+  }
+}
+
+const addMessage = (type, text) => {
+  const message = {
+    type: type,
     text: text,
     timestamp: new Date()
   }
-  messages.value.push(userMessage)
-  
-  // Add typing indicator
-  const typingMessage = { type: 'typing' }
-  messages.value.push(typingMessage)
+  messages.value.push(message)
   
   // Scroll to bottom
-  await nextTick()
-  scrollToBottom()
-  
-  // Simulate AI response (replace with actual AI API call)
-  setTimeout(() => {
-    // Remove typing indicator
-    messages.value = messages.value.filter(msg => msg.type !== 'typing')
-    
-    // Add AI response
-    const aiResponse = {
-      type: 'ai',
-      text: getAIResponse(text),
-      timestamp: new Date()
-    }
-    messages.value.push(aiResponse)
-    
-    // Scroll to bottom
-    nextTick(() => scrollToBottom())
-  }, 1500)
+  nextTick(() => scrollToBottom())
 }
 
-const getAIResponse = (userText) => {
-  // Simple AI response logic (replace with actual AI API)
-  const responses = {
-    farming: [
-      "मैं आपकी खेती से जुड़ी समस्याओं में मदद कर सकता हूं। आप किस फसल के बारे में जानना चाहते हैं?",
-      "खेती के लिए सही समय, मिट्टी की जांच, और उर्वरक के बारे में पूछ सकते हैं।"
-    ],
-    weather: [
-      "मौसम की जानकारी के लिए आप डैशबोर्ड पर जा सकते हैं जहां 7 दिन का पूर्वानुमान मिलता है।",
-      "आज का मौसम अच्छा है खेती के काम के लिए। क्या आपको कोई खास जानकारी चाहिए?"
-    ],
-    market: [
-      "बाजार के भाव देखने के लिए मार्केट प्राइस सेक्शन में जाएं। वहां सभी फसलों के ताजा रेट मिलते हैं।",
-      "आज के मुख्य फसलों के भाव अच्छे हैं। कौन सी फसल बेचना चाहते हैं?"
-    ],
-    default: [
-      "मैं आपकी खेती संबंधी मदद के लिए यहां हूं। आप मौसम, बाजार भाव, फसल की देखभाल के बारे में पूछ सकते हैं।",
-      "कृषि से जुड़े किसी भी सवाल के लिए मुझसे पूछिए। मैं आपकी मदद करने की कोशिश करूंगा।"
-    ]
+const addSystemMessage = (text) => {
+  const message = {
+    type: 'system',
+    text: text,
+    timestamp: new Date()
   }
+  messages.value.push(message)
   
-  const lowerText = userText.toLowerCase()
-  
-  if (lowerText.includes('खेती') || lowerText.includes('फसल') || lowerText.includes('farm')) {
-    return responses.farming[Math.floor(Math.random() * responses.farming.length)]
-  } else if (lowerText.includes('मौसम') || lowerText.includes('weather') || lowerText.includes('बारिश')) {
-    return responses.weather[Math.floor(Math.random() * responses.weather.length)]
-  } else if (lowerText.includes('बाजार') || lowerText.includes('भाव') || lowerText.includes('market') || lowerText.includes('price')) {
-    return responses.market[Math.floor(Math.random() * responses.market.length)]
-  } else {
-    return responses.default[Math.floor(Math.random() * responses.default.length)]
-  }
-}
-
-const updateLanguage = () => {
-  if (recognition) {
-    recognition.lang = selectedLanguage.value
-  }
+  // Scroll to bottom
+  nextTick(() => scrollToBottom())
 }
 
 const clearChat = () => {
@@ -328,6 +372,19 @@ const formatTime = (timestamp) => {
     hour: '2-digit', 
     minute: '2-digit' 
   })
+}
+
+const reconnect = async () => {
+  if (conversation) {
+    await conversation.endSession()
+  }
+  await initializeConversation()
+}
+
+const setVolume = async (volume) => {
+  if (conversation) {
+    await conversation.setVolume({ volume })
+  }
 }
 </script>
 
