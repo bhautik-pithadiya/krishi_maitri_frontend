@@ -3,7 +3,10 @@
     <!-- Header -->
     <AppHeader />
 
-    <!-- Main Content -->
+    <!-- Main Con                <svg v-if="!isConnected" class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M7 4a3 3 0 6 0v4a3 3 0 11-6 0V4z"/>
+                  <path d="M5.5 9.643a.75.75 0 00-1.5 0V10c0 3.06 2.29 5.585 5.25 5.954V17.5h-1.5a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-1.5v-1.546A6.001 6.001 0 0016 10v-.357a.75.75 0 00-1.5 0V10a4.5 4.5 0 01-9 0v-.357z"/>
+                </svg> -->
     <main class="container mx-auto px-4 py-8 max-w-4xl">
       <!-- Page Header -->
       <div class="text-center mb-8">
@@ -96,9 +99,11 @@
           </div>
 
           <!-- Voice Input Controls -->
-          <div class="flex items-center justify-center space-x-4">
-            <!-- Microphone Button -->
-            <button
+          <div class="flex flex-col items-center space-y-4">
+            <!-- Main Control Row -->
+            <div class="flex items-center justify-center space-x-6">
+              <!-- Microphone Button -->
+              <button
               @click="toggleConversation"
               :class="[
                 'w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 transform',
@@ -117,29 +122,35 @@
               </svg>
             </button>
 
-            <!-- Status Text -->
-            <div class="text-center">
-              <p v-if="connectionStatus === 'connecting'" class="text-blue-500 text-sm">
-                {{ $t('voiceAssistant.connecting') }}
-              </p>
-              <p v-else-if="isConnected" class="text-green-500 text-sm">
-                {{ $t('voiceAssistant.connected') }}
-              </p>
-              <p v-else class="text-gray-500 text-sm">
-                {{ $t('voiceAssistant.disconnected') }}
-              </p>
-              <button
-                @click="toggleConversation"
-                :class="[
-                  'mt-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors',
-                  isConnected 
-                    ? 'bg-red-100 text-red-700 hover:bg-red-200' 
-                    : 'bg-primary text-white hover:bg-green-600'
-                ]"
-                :disabled="connectionStatus === 'connecting'"
-              >
-                {{ isConnected ? $t('voiceAssistant.stopConversation') : $t('voiceAssistant.startConversation') }}
-              </button>
+              <!-- Status and Action Column -->
+              <div class="flex flex-col items-center space-y-3">
+                <!-- Status Text -->
+                <div class="text-center">
+                  <p v-if="connectionStatus === 'connecting'" class="text-blue-500 text-sm font-medium">
+                    {{ $t('voiceAssistant.connecting') }}
+                  </p>
+                  <p v-else-if="isConnected" class="text-green-500 text-sm font-medium">
+                    {{ $t('voiceAssistant.connected') }}
+                  </p>
+                  <p v-else class="text-gray-500 text-sm">
+                    {{ $t('voiceAssistant.disconnected') }}
+                  </p>
+                </div>
+                
+                <!-- Action Button -->
+                <button
+                  @click="toggleConversation"
+                  :class="[
+                    'px-6 py-2 rounded-lg text-sm font-medium transition-colors min-w-[140px]',
+                    isConnected 
+                      ? 'bg-red-100 text-red-700 hover:bg-red-200' 
+                      : 'bg-primary text-white hover:bg-green-600'
+                  ]"
+                  :disabled="connectionStatus === 'connecting'"
+                >
+                  {{ isConnected ? $t('voiceAssistant.stopConversation') : $t('voiceAssistant.startConversation') }}
+                </button>
+              </div>
             </div>
 
             <!-- Clear Chat Button -->
@@ -152,25 +163,7 @@
             </button>
           </div>
 
-          <!-- Language Selector -->
-          <div class="mt-4 text-center">
-            <select 
-              v-model="selectedLanguage" 
-              @change="updateLanguage"
-              class="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-primary focus:border-primary"
-            >
-              <option value="hi-IN">हिंदी (Hindi)</option>
-              <option value="en-IN">English (India)</option>
-              <option value="gu-IN">ગુજરાતી (Gujarati)</option>
-              <option value="mr-IN">मराठी (Marathi)</option>
-              <option value="bn-IN">বাংলা (Bengali)</option>
-              <option value="ta-IN">தமிழ் (Tamil)</option>
-              <option value="te-IN">తెలుగు (Telugu)</option>
-              <option value="kn-IN">ಕನ್ನಡ (Kannada)</option>
-              <option value="pa-IN">ਪੰਜਾਬੀ (Punjabi)</option>
-            </select>
-            <p class="text-xs text-gray-500 mt-1">{{ $t('voiceAssistant.selectLanguage') }}</p>
-          </div>
+          <!-- Language Selector removed - ElevenLabs has automatic language detection -->
         </div>
       </div>
     </main>
@@ -194,7 +187,6 @@ const messages = ref([])
 const isListening = ref(false)
 const currentTranscription = ref('')
 const speechSupported = ref(false)
-const selectedLanguage = ref('hi-IN')
 const chatContainer = ref(null)
 const isConnected = ref(false)
 const connectionStatus = ref('disconnected')

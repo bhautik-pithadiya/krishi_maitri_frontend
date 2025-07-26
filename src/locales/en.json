@@ -239,7 +239,6 @@
     "transcribing": "Transcribing",
     "clickToTalk": "Click microphone to start talking",
     "notSupported": "Speech recognition not supported in this browser",
-    "clearChat": "Clear Chat",
-    "selectLanguage": "Select your preferred language for voice input"
+    "clearChat": "Clear Chat"
   }
 }
