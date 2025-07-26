@@ -48,6 +48,23 @@
 
         <!-- Auth Buttons -->
         <div class="hidden md:flex items-center space-x-4">
+          <!-- Language Selection -->
+          <select 
+            v-model="selectedLanguage"
+            @change="updateLanguage"
+            class="px-6 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary text-sm"
+          >
+            <option value="en">EN</option>
+            <option value="hi">हि</option>
+            <option value="bn">বা</option>
+            <option value="te">తె</option>
+            <option value="ta">த</option>
+            <option value="mr">म</option>
+            <option value="gu">ગ</option>
+            <option value="kn">ಕ</option>
+            <option value="pa">ਪ</option>
+          </select>
+
           <template v-if="!isAuthenticated">
             <router-link 
               to="/login" 
@@ -124,6 +141,26 @@
           </router-link>
           
           <div class="border-t pt-4 mt-4">
+            <!-- Language Selection for Mobile -->
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Language</label>
+              <select 
+                v-model="selectedLanguage"
+                @change="updateLanguage"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
+              >
+                <option value="en">English</option>
+                <option value="hi">हिंदी (Hindi)</option>
+                <option value="bn">বাংলা (Bengali)</option>
+                <option value="te">తెలుగు (Telugu)</option>
+                <option value="ta">தமிழ் (Tamil)</option>
+                <option value="mr">मराठी (Marathi)</option>
+                <option value="gu">ગુજરાતી (Gujarati)</option>
+                <option value="kn">ಕನ್ನಡ (Kannada)</option>
+                <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+              </select>
+            </div>
+
             <template v-if="!isAuthenticated">
               <router-link 
                 to="/login" 
@@ -171,6 +208,7 @@ export default {
   setup() {
     const router = useRouter()
     const showMobileMenu = ref(false)
+    const selectedLanguage = ref('en')
 
     const isAuthenticated = computed(() => {
       const token = localStorage.getItem('access_token')
@@ -178,12 +216,42 @@ export default {
       return authFlag === 'true' && token !== null
     })
 
+    // Initialize language from localStorage or user profile
+    const initializeLanguage = () => {
+      const savedUser = localStorage.getItem('user')
+      if (savedUser) {
+        try {
+          const userData = JSON.parse(savedUser)
+          selectedLanguage.value = userData.language || 'en'
+        } catch (error) {
+          selectedLanguage.value = 'en'
+        }
+      }
+    }
+
     const toggleMobileMenu = () => {
       showMobileMenu.value = !showMobileMenu.value
     }
 
     const closeMobileMenu = () => {
       showMobileMenu.value = false
+    }
+
+    const updateLanguage = () => {
+      // Update language in localStorage
+      const savedUser = localStorage.getItem('user')
+      if (savedUser) {
+        try {
+          const userData = JSON.parse(savedUser)
+          userData.language = selectedLanguage.value
+          localStorage.setItem('user', JSON.stringify(userData))
+        } catch (error) {
+          console.error('Error updating language preference:', error)
+        }
+      }
+
+      // Close mobile menu if open
+      closeMobileMenu()
     }
 
     const logout = () => {
@@ -198,11 +266,16 @@ export default {
       closeMobileMenu()
     }
 
+    // Initialize language on component mount
+    initializeLanguage()
+
     return {
       showMobileMenu,
+      selectedLanguage,
       isAuthenticated,
       toggleMobileMenu,
       closeMobileMenu,
+      updateLanguage,
       logout
     }
   }
