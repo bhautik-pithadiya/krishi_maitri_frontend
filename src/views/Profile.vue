@@ -5,7 +5,33 @@
 
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-8">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Loading State -->
+      <div v-if="loading" class="flex justify-center items-center min-h-96">
+        <div class="text-center">
+          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p class="text-gray-600">Loading your profile...</p>
+        </div>
+      </div>
+
+      <!-- Error State -->
+      <div v-else-if="error" class="max-w-md mx-auto">
+        <div class="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
+          <svg class="h-12 w-12 text-red-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.694-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+          </svg>
+          <h3 class="text-lg font-medium text-red-800 mb-2">Unable to Load Profile</h3>
+          <p class="text-red-600 mb-4">{{ error }}</p>
+          <button 
+            @click="fetchUserProfile"
+            class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+
+      <!-- Profile Content -->
+      <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Profile Sidebar -->
         <div class="lg:col-span-1">
           <div class="bg-white rounded-xl shadow-md p-6 sticky top-8">
@@ -16,10 +42,26 @@
               </div>
               <h2 class="text-xl font-bold text-gray-900">{{ user.name }}</h2>
               <p class="text-gray-600">{{ user.location }}</p>
-              <div class="mt-4">
+              <div class="mt-4 space-y-2">
                 <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
                   Verified Farmer
                 </span>
+                <div v-if="user.email_verified" class="flex items-center justify-center">
+                  <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium flex items-center">
+                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                    Email Verified
+                  </span>
+                </div>
+                <div v-else class="flex items-center justify-center">
+                  <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-medium flex items-center">
+                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                    </svg>
+                    Email Pending
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -83,6 +125,24 @@
             <div class="p-6">
               <form @submit.prevent="saveProfile">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">User ID</label>
+                    <input 
+                      :value="user.uid"
+                      type="text" 
+                      disabled
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-600 text-sm"
+                    >
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email Verified</label>
+                    <input 
+                      :value="user.email_verified ? 'Yes' : 'No'"
+                      type="text" 
+                      disabled
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-600"
+                    >
+                  </div>
                   <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
                     <input 
@@ -248,6 +308,7 @@
 import { ref, computed, onMounted } from 'vue'
 import AppHeader from '../components/AppHeader.vue'
 import AppFooter from '../components/AppFooter.vue'
+import apiConfig from '../config/api.js'
 
 export default {
   name: 'Profile',
@@ -257,20 +318,24 @@ export default {
   },
   setup() {
     const isEditing = ref(false)
+    const loading = ref(true)
+    const error = ref('')
     
     const user = ref({
-      name: 'Rajesh Kumar',
-      mobile: '9876543210',
-      email: 'rajesh.kumar@email.com',
-      location: 'Amritsar',
-      state: 'Punjab',
-      farmSize: 5,
-      primaryCrops: 'Wheat, Rice, Sugarcane',
+      uid: '',
+      name: '',
+      mobile: '',
+      email: '',
+      location: '',
+      state: '',
+      farmSize: '',
+      primaryCrops: '',
       language: 'en',
-      memberSince: 'Jan 2024',
-      servicesUsed: 12,
-      questionsAsked: 8,
-      helpfulAnswers: 15
+      memberSince: '',
+      servicesUsed: 0,
+      questionsAsked: 0,
+      helpfulAnswers: 0,
+      email_verified: false
     })
 
     const editableUser = ref({ ...user.value })
@@ -337,6 +402,106 @@ export default {
       }
     ])
 
+    // Fetch user profile data from API
+    const fetchUserProfile = async () => {
+      try {
+        loading.value = true
+        error.value = ''
+        
+        // Check if user is authenticated
+        const token = localStorage.getItem('access_token')
+        if (!token) {
+          throw new Error('No access token found. Please log in again.')
+        }
+
+        // Make authenticated request to profile endpoint
+        const response = await fetch(apiConfig.auth.profile, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        })
+
+        if (!response.ok) {
+          if (response.status === 401) {
+            throw new Error('Session expired. Please log in again.')
+          }
+          throw new Error(`Failed to fetch profile: ${response.status}`)
+        }
+
+        const profileData = await response.json()
+        
+        // Map API response to component data structure
+        const mappedUser = {
+          uid: profileData.uid || '',
+          name: profileData.display_name || 'Farmer',
+          mobile: profileData.mobile || profileData.phone_number || '',
+          email: profileData.email || '',
+          location: profileData.farmDetails?.location?.address || '',
+          state: extractStateFromLocation(profileData.farmDetails?.location?.address || ''),
+          farmSize: profileData.farmDetails?.farmSize || '',
+          primaryCrops: profileData.farmDetails?.cropName || '',
+          language: profileData.language || 'en',
+          memberSince: profileData.created_at ? 
+            new Date(profileData.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 
+            'Recent',
+          email_verified: profileData.email_verified || false,
+          // These would typically come from additional API calls or be included in the profile response
+          servicesUsed: 12,
+          questionsAsked: 8,
+          helpfulAnswers: 15
+        }
+        
+        user.value = mappedUser
+        editableUser.value = { ...mappedUser }
+        
+        // Update localStorage with fresh data
+        localStorage.setItem('user', JSON.stringify(profileData))
+        
+      } catch (err) {
+        console.error('Error fetching profile:', err)
+        error.value = err.message
+        
+        // Fallback to localStorage data if API call fails
+        const savedUser = localStorage.getItem('user')
+        if (savedUser) {
+          try {
+            const userData = JSON.parse(savedUser)
+            const mappedUser = mapUserDataToProfile(userData)
+            user.value = mappedUser
+            editableUser.value = { ...mappedUser }
+          } catch (parseError) {
+            console.error('Error parsing saved user data:', parseError)
+          }
+        }
+      } finally {
+        loading.value = false
+      }
+    }
+
+    // Helper function to map user data to profile structure
+    const mapUserDataToProfile = (userData) => {
+      return {
+        uid: userData.uid || '',
+        name: userData.display_name || userData.name || 'Farmer',
+        mobile: userData.mobile || userData.phone_number || '',
+        email: userData.email || '',
+        location: userData.farmDetails?.location?.address || userData.location || '',
+        state: extractStateFromLocation(userData.farmDetails?.location?.address || userData.location || ''),
+        farmSize: userData.farmDetails?.farmSize || '',
+        primaryCrops: userData.farmDetails?.cropName || '',
+        language: userData.language || 'en',
+        memberSince: userData.created_at ? 
+          new Date(userData.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 
+          'Recent',
+        email_verified: userData.email_verified || false,
+        servicesUsed: 12,
+        questionsAsked: 8,
+        helpfulAnswers: 15
+      }
+    }
+
     const userInitials = computed(() => {
       return user.value.name.split(' ').map(name => name.charAt(0)).join('').toUpperCase()
     })
@@ -353,18 +518,29 @@ export default {
       editableUser.value = { ...user.value }
     }
 
-    const saveProfile = () => {
-      user.value = { ...editableUser.value }
-      // Here you would typically save to backend
-      localStorage.setItem('user', JSON.stringify(user.value))
-      isEditing.value = false
-      alert('Profile updated successfully!')
+    const saveProfile = async () => {
+      try {
+        // Here you would typically save to backend API
+        // For now, just update local data
+        user.value = { ...editableUser.value }
+        localStorage.setItem('user', JSON.stringify(user.value))
+        isEditing.value = false
+        alert('Profile updated successfully!')
+      } catch (err) {
+        console.error('Error saving profile:', err)
+        alert('Failed to save profile. Please try again.')
+      }
     }
 
-    const updateLanguage = () => {
-      // Here you would typically save language preference to backend
-      localStorage.setItem('user', JSON.stringify(user.value))
-      alert('Language preference updated!')
+    const updateLanguage = async () => {
+      try {
+        // Here you would typically save language preference to backend
+        localStorage.setItem('user', JSON.stringify(user.value))
+        alert('Language preference updated!')
+      } catch (err) {
+        console.error('Error updating language:', err)
+        alert('Failed to update language preference.')
+      }
     }
 
     const getActivityIcon = (type) => {
@@ -393,44 +569,25 @@ export default {
       }
     }
 
-    onMounted(() => {
-      // Load user data from localStorage
-      const savedUser = localStorage.getItem('user')
-      if (savedUser) {
-        const userData = JSON.parse(savedUser)
-        
-        // Map API response structure to profile structure
-        const mappedUser = {
-          name: userData.display_name || userData.name || 'Farmer',
-          mobile: userData.mobile || userData.phone_number || '',
-          email: userData.email || '',
-          location: userData.farmDetails?.location?.address || userData.location || '',
-          state: extractStateFromLocation(userData.farmDetails?.location?.address || userData.location || ''),
-          farmSize: userData.farmDetails?.farmSize || '',
-          primaryCrops: userData.farmDetails?.cropName || '',
-          language: userData.language || 'en',
-          memberSince: userData.created_at ? new Date(userData.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'Jan 2024',
-          servicesUsed: 12, // This would come from another API call
-          questionsAsked: 8, // This would come from another API call
-          helpfulAnswers: 15 // This would come from another API call
-        }
-        
-        user.value = { ...user.value, ...mappedUser }
-        editableUser.value = { ...user.value }
-      }
-    })
-
     const extractStateFromLocation = (location) => {
       // Simple function to extract state from address string
+      if (!location) return ''
       const parts = location.split(',')
       if (parts.length >= 2) {
         return parts[parts.length - 2].trim()
       }
-      return 'India'
+      return ''
     }
+
+    onMounted(() => {
+      // Fetch fresh profile data from API
+      fetchUserProfile()
+    })
 
     return {
       isEditing,
+      loading,
+      error,
       user,
       editableUser,
       recentActivity,
@@ -441,7 +598,8 @@ export default {
       saveProfile,
       updateLanguage,
       getActivityIcon,
-      getStatusColor
+      getStatusColor,
+      fetchUserProfile
     }
   }
 }
