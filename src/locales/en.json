@@ -1,0 +1,126 @@
+{
+    "header": {
+        "home": "Home",
+        "services": "Services",
+        "marketPrices": "Market Prices",
+        "community": "Community",
+        "login": "Login",
+        "logout": "Logout",
+        "dashboard": "Dashboard",
+        "profile": "Profile",
+        "language": "Language"
+    },
+    "footer": {
+        "description": "Empowering farmers with digital tools and knowledge for sustainable agriculture and better livelihoods.",
+        "quickLinks": "Quick Links",
+        "services": "Services",
+        "marketPrices": "Market Prices",
+        "community": "Community",
+        "governmentSchemes": "Government Schemes",
+        "servicesList": {
+            "soilTesting": "Soil Testing",
+            "expertAdvice": "Expert Advice",
+            "equipmentRental": "Equipment Rental",
+            "weatherUpdates": "Weather Updates"
+        },
+        "contact": "Contact",
+        "phone": "+91 98765 43210",
+        "email": "help@krishimaitri.com",
+        "location": "New Delhi, India",
+        "followUs": "Follow Us",
+        "copyright": "© 2025 Krishi Maitri. All rights reserved.",
+        "privacyPolicy": "Privacy Policy",
+        "termsOfService": "Terms of Service"
+    },
+    "community": {
+    "title": "Farmer Community Forum",
+    "subtitle": "Connect with fellow farmers, share experiences, and get expert advice",
+    "activeMembers": "Active Members",
+    "discussions": "Discussions",
+    "experts": "Experts",
+    "solved": "Solved",
+    "categories": "Categories",
+    "askQuestion": "Ask a Question",
+    "featured": "FEATURED",
+    "featuredTitle": "Best Practices for Organic Farming in Monsoon Season",
+    "featuredDescription": "Join our expert-led discussion on sustainable farming techniques during the rainy season. Share your experiences and learn from successful organic farmers.",
+    "featuredBy": "{name} • Agricultural Expert",
+    "participants": "{count} participants",
+    "loadMore": "Load More Discussions",
+    "askModalTitle": "Ask a Question",
+    "form": {
+      "category": "Category",
+      "categoryPlaceholder": "Select a category",
+      "title": "Question Title",
+      "titlePlaceholder": "What's your farming question?",
+      "description": "Describe your question",
+      "descriptionPlaceholder": "Provide details about your farming situation, what you've tried, and what specific help you need...",
+      "tags": "Add Tags (optional)",
+      "tagsPlaceholder": "e.g. rice, organic, pest-control (separate with commas)",
+      "cancel": "Cancel",
+      "post": "Post Question"
+    },
+    "replies": "{count} replies",
+    "views": "{count} views",
+    "likes": "{count} likes",
+    "expertReply": "Expert Reply"
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "Good morning!",
+      "afternoon": "Good afternoon!",
+      "evening": "Good evening!"
+    },
+    "welcomeBack": "Welcome back, {name}!",
+    "intro": "Here's what's happening in your agricultural world today.",
+    "weather": {
+      "title": "Today's Weather",
+      "humidity": "Humidity: {value}%",
+      "rainfall": "This Week's Rainfall",
+      "advice": "{advice}",
+      "condition": {
+        "partlyCloudy": "Partly Cloudy"
+      },
+      "rainfallAdvice": {
+        "goodForCrops": "Good for crops"
+      }
+    },
+    "actions": {
+      "bookService": {
+        "title": "Book Service",
+        "description": "Soil testing, consultations",
+        "cta": "Book Now →"
+      },
+      "marketPrices": {
+        "title": "Market Prices",
+        "description": "Live crop rates",
+        "cta": "View Prices →"
+      },
+      "govtSchemes": {
+        "title": "Govt Schemes",
+        "description": "Benefits & subsidies",
+        "cta": "Explore →"
+      }
+    },
+    "news": {
+      "title": "Agriculture News & Updates",
+      "timeAgo": "{time} ago"
+    },
+    "services": {
+      "title": "Recent Services",
+      "viewAll": "View All Services",
+      "soilTesting": "Soil Testing",
+      "expertConsultation": "Expert Consultation",
+      "equipmentRental": "Equipment Rental"
+    },
+    "tips": {
+      "title": "Today's Farming Tips",
+      "cta": "Join Community Discussion"
+    },
+    "status": {
+      "Completed": "Completed",
+      "In Progress": "In Progress",
+      "Pending": "Pending"
+    }
+  }
+}

@@ -1,0 +1,126 @@
+{
+    "header": {
+        "home": "ઘર",
+        "services": "સેવાઓ",
+        "marketPrices": "બજાર ભાવ",
+        "community": "સમુદાય",
+        "login": "પ્રવેશ કરો",
+        "logout": "બહાર નીકળો",
+        "dashboard": "ડૅશબોર્ડ",
+        "profile": "પ્રોફાઇલ",
+        "language": "ભાષા"
+    },
+    "footer": {
+        "description": "ખેડૂતોને ટકાઉ ખેતી અને સારીtoday જીવિકા માટે ડિજિટલ સાધનો અને જ્ઞાનથી સશક્ત બનાવે છે.",
+        "quickLinks": "ઝડપી લિંક્સ",
+        "services": "સેવાઓ",
+        "marketPrices": "બજાર ભાવ",
+        "community": "સમુદાય",
+        "governmentSchemes": "સરકારી યોજનાઓ",
+        "servicesList": {
+            "soilTesting": "માટી પરીક્ષણ",
+            "expertAdvice": "તજજ્ઞ સલાહ",
+            "equipmentRental": "ઉપકરણ ભાડે",
+            "weatherUpdates": "હવામાન અપડેટ્સ"
+        },
+        "contact": "સંપર્ક",
+        "phone": "+૯૧ ૯૮૭૬૫ ૪૩૨૧૦",
+        "email": "help@krishimaitri.com",
+        "location": "નવી દિલ્હી, ભારત",
+        "followUs": "અમે જોડાઓ",
+        "copyright": "© ૨૦૨૫ કૃષિ મિત્ર. બધા અધિકારો સંરક્ષિત છે.",
+        "privacyPolicy": "ગોપનીયતા નીતિ",
+        "termsOfService": "સેવાની શરતો"
+    },
+    "community": {
+    "title": "ખેતી લાઇટ ફોરમ",
+    "subtitle": "ખેતમજૂરો સાથે જોડાઓ, અનુભવ શેર કરો અને નિષ્ણાતો પાસેથી સલાહ મેળવો",
+    "activeMembers": "સક્રિય સભ્યો",
+    "discussions": "ચર્ચાઓ",
+    "experts": "નિષ્ણાતો",
+    "solved": "સલવ થયા",
+    "categories": "શ્રેણીઓ",
+    "askQuestion": "પ્રશ્ન પૂછો",
+    "featured": "વિશિષ્ટ",
+    "featuredTitle": "મોસમ દરમિયાન ઑર્ગેનિક ખેતી માટે શ્રેષ્ઠ પદ્ધતિઓ",
+    "featuredDescription": "વરસાદી મોસમમાં ટકાઉ ખેતી માટે નિષ્ણાત દ્રારા માર્ગદર્શન મેળવવો. તમારા અનુભવ શેર કરો અને સફળ ખેડૂતો પાસેથી શીખો.",
+    "featuredBy": "{name} • કૃષિ નિષ્ણાત",
+    "participants": "{count} ભાગ લેનારાઓ",
+    "loadMore": "વધુ ચર્ચાઓ જુઓ",
+    "askModalTitle": "પ્રશ્ન પૂછો",
+    "form": {
+      "category": "શ્રેણી",
+      "categoryPlaceholder": "શ્રેણી પસંદ કરો",
+      "title": "પ્રશ્ન શીર્ષક",
+      "titlePlaceholder": "તમારો ખેતી સંબંધિત પ્રશ્ન શું છે?",
+      "description": "તમારું પ્રશ્ન વર્ણવો",
+      "descriptionPlaceholder": "તમારી ખેતી પરિસ્થિતિ, તમારા પ્રયાસો અને શું ખાસ મદદ જોઈએ તે લખો...",
+      "tags": "ટૅગ્સ ઉમેરો (ઐચ્છિક)",
+      "tagsPlaceholder": "દા.ત. ચોખા, ઓર્ગેનિક, જીવાત નિયંત્રણ",
+      "cancel": "રદ કરો",
+      "post": "પ્રશ્ન મોકલો"
+    },
+    "replies": "{count} જવાબો",
+    "views": "{count} નિહાળ્યું",
+    "likes": "{count} પસંદગીઓ",
+    "expertReply": "નિષ્ણાત જવાબ"
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "શુભ સવાર!",
+      "afternoon": "શુભ બપોર!",
+      "evening": "શુભ સાંજ!"
+    },
+    "welcomeBack": "ફરી આવકારો, {name}!",
+    "intro": "આજના કૃષિ વિશ્વની ઘટનાઓ અહીં જુઓ.",
+    "weather": {
+      "title": "આજનું હવામાન",
+      "humidity": "ભેજ: {value}%",
+      "rainfall": "આ અઠવાડિયાનો વરસાદ",
+      "advice": "{advice}",
+      "condition": {
+        "partlyCloudy": "સંસદી વરસાદ"
+      },
+      "rainfallAdvice": {
+        "goodForCrops": "ખેતી માટે સારું"
+      }
+    },
+    "actions": {
+      "bookService": {
+        "title": "સેવા બુક કરો",
+        "description": "માટી પરીક્ષણ, સલાહકાર સેવાઓ",
+        "cta": "હવે બુક કરો →"
+      },
+      "marketPrices": {
+        "title": "માર્કેટ ભાવ",
+        "description": "જીવંત પાકના ભાવ",
+        "cta": "ભાવ જુઓ →"
+      },
+      "govtSchemes": {
+        "title": "સરકારી યોજના",
+        "description": "લાભો અને સબસિડી",
+        "cta": "અધિક જાણો →"
+      }
+    },
+    "news": {
+      "title": "કૃષિ સમાચાર અને અપડેટ્સ",
+      "timeAgo": "{time} પહેલા"
+    },
+    "services": {
+      "title": "હાલની સેવાઓ",
+      "viewAll": "બધી સેવાઓ જુઓ",
+      "soilTesting": "માટી પરીક્ષણ",
+      "expertConsultation": "તજજ્ઞ સલાહ",
+      "equipmentRental": "ઉપકરણ ભાડે"
+    },
+    "tips": {
+      "title": "આજની ખેતી ટીપ્સ",
+      "cta": "ચર્ચામાં જોડાઓ"
+    },
+    "status": {
+      "Completed": "પૂર્ણ થયું",
+      "In Progress": "ચાલુ છે",
+      "Pending": "બાકી"
+    }
+  }
+}
