@@ -550,7 +550,7 @@ export default {
       
       try {
         if (isLogin.value) {
-          // Handle Sign In with email/password
+          // Handle Sign In with email/password - send data as per API specification
           const loginData = {
             email: form.value.email,
             password: form.value.password
@@ -568,13 +568,15 @@ export default {
           if (response.ok) {
             const data = await response.json()
             
-            // Store authentication data
+            // Handle JWT token response as per API specification
+            // Expected response: { user: {...}, access_token: "string", token_type: "bearer", expires_in: 3600 }
             localStorage.setItem('isAuthenticated', 'true')
             localStorage.setItem('access_token', data.access_token)
             localStorage.setItem('token_type', data.token_type)
             localStorage.setItem('expires_in', data.expires_in.toString())
             localStorage.setItem('user', JSON.stringify(data.user))
             
+            alert('Login successful! Welcome back.')
             router.push('/dashboard')
           } else {
             const errorData = await response.json()
@@ -630,55 +632,7 @@ export default {
         }
       } catch (error) {
         console.error('API Error:', error)
-        
-        // Fallback to demo mode if API is not available
-        alert('API not available. Running in demo mode.')
-        
-        if (isLogin.value) {
-          // Demo login
-          localStorage.setItem('isAuthenticated', 'true')
-          localStorage.setItem('user', JSON.stringify({
-            uid: 'demo-user-id',
-            display_name: 'Demo Farmer',
-            email: form.value.email,
-            phone_number: '',
-            mobile: '',
-            email_verified: false,
-            created_at: new Date().toISOString(),
-            language: selectedLanguage.value,
-            farmDetails: {
-              location: { address: 'Demo Location', latitude: 0, longitude: 0 },
-              cropName: '',
-              farmSize: '',
-              experience: ''
-            }
-          }))
-        } else {
-          // Demo signup
-          localStorage.setItem('isAuthenticated', 'true')
-          localStorage.setItem('user', JSON.stringify({
-            uid: 'demo-user-' + Date.now(),
-            display_name: form.value.name,
-            email: form.value.email,
-            phone_number: form.value.mobile,
-            mobile: form.value.mobile,
-            email_verified: false,
-            created_at: new Date().toISOString(),
-            language: selectedLanguage.value,
-            farmDetails: {
-              location: {
-                address: form.value.location || 'Demo Location',
-                latitude: form.value.latitude || 0,
-                longitude: form.value.longitude || 0
-              },
-              cropName: form.value.cropName || '',
-              farmSize: form.value.farmSize || '',
-              experience: form.value.experience || ''
-            }
-          }))
-        }
-        
-        router.push('/dashboard')
+        alert('Unable to connect to server. Please check your internet connection and try again.')
       }
       
       loading.value = false
