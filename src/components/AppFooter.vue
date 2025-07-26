@@ -13,32 +13,32 @@
             <span class="text-lg font-bold">Krishi Maitri</span>
           </div>
           <p class="text-gray-300 text-sm">
-            Empowering farmers with digital tools and knowledge for sustainable agriculture and better livelihoods.
+            {{ $t('footer.description') }}
           </p>
         </div>
 
         <!-- Quick Links -->
         <div>
-          <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+          <h3 class="text-lg font-semibold mb-4">{{ $t('footer.quickLinks') }}</h3>
           <ul class="space-y-2">
             <li>
               <router-link to="/services" class="text-gray-300 hover:text-white transition-colors text-sm">
-                Services
+                {{ $t('footer.services') }}
               </router-link>
             </li>
             <li>
               <router-link to="/market-prices" class="text-gray-300 hover:text-white transition-colors text-sm">
-                Market Prices
+                {{ $t('footer.marketPrices') }}
               </router-link>
             </li>
             <li>
               <router-link to="/community" class="text-gray-300 hover:text-white transition-colors text-sm">
-                Community
+                {{ $t('footer.community') }}
               </router-link>
             </li>
             <li>
               <a href="#" class="text-gray-300 hover:text-white transition-colors text-sm">
-                Government Schemes
+                {{ $t('footer.governmentSchemes') }}
               </a>
             </li>
           </ul>
@@ -46,26 +46,26 @@
 
         <!-- Services -->
         <div>
-          <h3 class="text-lg font-semibold mb-4">Services</h3>
+          <h3 class="text-lg font-semibold mb-4">{{ $t('footer.services') }}</h3>
           <ul class="space-y-2">
             <li>
               <a href="#" class="text-gray-300 hover:text-white transition-colors text-sm">
-                Soil Testing
+                {{ $t('footer.servicesList.soilTesting') }}
               </a>
             </li>
             <li>
               <a href="#" class="text-gray-300 hover:text-white transition-colors text-sm">
-                Expert Advice
+                {{ $t('footer.servicesList.expertAdvice') }}
               </a>
             </li>
             <li>
               <a href="#" class="text-gray-300 hover:text-white transition-colors text-sm">
-                Equipment Rental
+                {{ $t('footer.servicesList.equipmentRental') }}
               </a>
             </li>
             <li>
               <a href="#" class="text-gray-300 hover:text-white transition-colors text-sm">
-                Weather Updates
+                {{ $t('footer.servicesList.weatherUpdates') }}
               </a>
             </li>
           </ul>
@@ -73,32 +73,32 @@
 
         <!-- Contact Info -->
         <div>
-          <h3 class="text-lg font-semibold mb-4">Contact</h3>
+          <h3 class="text-lg font-semibold mb-4">{{ $t('footer.contact') }}</h3>
           <div class="space-y-3">
             <div class="flex items-center space-x-3">
               <svg class="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
               </svg>
-              <span class="text-gray-300 text-sm">+91 98765 43210</span>
+              <span class="text-gray-300 text-sm">{{ $t('footer.phone') }}</span>
             </div>
             <div class="flex items-center space-x-3">
               <svg class="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
                 <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
               </svg>
-              <span class="text-gray-300 text-sm">help@krishimaitri.com</span>
+              <span class="text-gray-300 text-sm">{{ $t('footer.email') }}</span>
             </div>
             <div class="flex items-center space-x-3">
               <svg class="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
               </svg>
-              <span class="text-gray-300 text-sm">New Delhi, India</span>
+              <span class="text-gray-300 text-sm">{{ $t('footer.location') }}</span>
             </div>
           </div>
 
           <!-- Social Links -->
           <div class="mt-6">
-            <h4 class="text-sm font-semibold mb-3">Follow Us</h4>
+            <h4 class="text-sm font-semibold mb-3">{{ $t('footer.followUs') }}</h4>
             <div class="flex space-x-4">
               <a href="#" class="text-gray-300 hover:text-white transition-colors">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -123,9 +123,9 @@
       <!-- Bottom Bar -->
       <div class="border-t border-earth-700 mt-8 pt-8 text-center">
         <p class="text-gray-400 text-sm">
-          © 2025 Krishi Maitri. All rights reserved. | 
-          <a href="#" class="hover:text-white transition-colors">Privacy Policy</a> | 
-          <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+          {{ $t('footer.copyright') }} | 
+          <a href="#" class="hover:text-white transition-colors">{{ $t('footer.privacyPolicy') }}</a> | 
+          <a href="#" class="hover:text-white transition-colors">{{ $t('footer.termsOfService') }}</a>
         </p>
       </div>
     </div>

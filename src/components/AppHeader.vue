@@ -6,7 +6,8 @@
         <div class="flex items-center space-x-2">
           <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
             <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+              <path
+                d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
             </svg>
           </div>
           <router-link to="/" class="text-xl font-bold text-gray-800">
@@ -16,44 +17,29 @@
 
         <!-- Desktop Navigation -->
         <div class="hidden md:flex space-x-8">
-          <router-link 
-            to="/" 
-            class="text-gray-700 hover:text-primary transition-colors font-medium"
-            :class="{ 'text-primary': $route.name === 'Landing' }"
-          >
-            Home
+          <router-link to="/" class="text-gray-700 hover:text-primary transition-colors font-medium"
+            :class="{ 'text-primary': $route.name === 'Landing' }">
+            {{ $t('header.home') }}
           </router-link>
-          <router-link 
-            to="/services" 
-            class="text-gray-700 hover:text-primary transition-colors font-medium"
-            :class="{ 'text-primary': $route.name === 'Services' }"
-          >
-            Services
+          <router-link to="/services" class="text-gray-700 hover:text-primary transition-colors font-medium"
+            :class="{ 'text-primary': $route.name === 'Services' }">
+            {{ $t('header.services') }}
           </router-link>
-          <router-link 
-            to="/market-prices" 
-            class="text-gray-700 hover:text-primary transition-colors font-medium"
-            :class="{ 'text-primary': $route.name === 'MarketPrices' }"
-          >
-            Market Prices
+          <router-link to="/market-prices" class="text-gray-700 hover:text-primary transition-colors font-medium"
+            :class="{ 'text-primary': $route.name === 'MarketPrices' }">
+            {{ $t('header.marketPrices') }}
           </router-link>
-          <router-link 
-            to="/community" 
-            class="text-gray-700 hover:text-primary transition-colors font-medium"
-            :class="{ 'text-primary': $route.name === 'Community' }"
-          >
-            Community
+          <router-link to="/community" class="text-gray-700 hover:text-primary transition-colors font-medium"
+            :class="{ 'text-primary': $route.name === 'Community' }">
+            {{ $t('header.community') }}
           </router-link>
         </div>
 
         <!-- Auth Buttons -->
         <div class="hidden md:flex items-center space-x-4">
           <!-- Language Selection -->
-          <select 
-            v-model="selectedLanguage"
-            @change="updateLanguage"
-            class="px-6 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary text-sm"
-          >
+          <select v-model="selectedLanguage" @change="updateLanguage"
+            class="px-6 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary text-sm">
             <option value="en">EN</option>
             <option value="hi">हि</option>
             <option value="bn">বা</option>
@@ -66,44 +52,30 @@
           </select>
 
           <template v-if="!isAuthenticated">
-            <router-link 
-              to="/login" 
-              class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors font-medium"
-            >
-              Login
+            <router-link to="/login"
+              class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors font-medium">
+              {{ $t('header.login') }}
             </router-link>
           </template>
           <template v-else>
-            <router-link 
-              to="/dashboard" 
-              class="text-gray-700 hover:text-primary transition-colors font-medium"
-              :class="{ 'text-primary': $route.name === 'Dashboard' }"
-            >
-              Dashboard
+            <router-link to="/dashboard" class="text-gray-700 hover:text-primary transition-colors font-medium"
+              :class="{ 'text-primary': $route.name === 'Dashboard' }">
+              {{ $t('header.dashboard') }}
             </router-link>
-            <router-link 
-              to="/profile" 
-              class="text-gray-700 hover:text-primary transition-colors font-medium"
-              :class="{ 'text-primary': $route.name === 'Profile' }"
-            >
-              Profile
+            <router-link to="/profile" class="text-gray-700 hover:text-primary transition-colors font-medium"
+              :class="{ 'text-primary': $route.name === 'Profile' }">
+              {{ $t('header.profile') }}
             </router-link>
-            <button 
-              @click="logout"
-              class="text-gray-700 hover:text-red-600 transition-colors font-medium"
-            >
-              Logout
+            <button @click="logout" class="text-gray-700 hover:text-red-600 transition-colors font-medium">
+              {{ $t('header.logout') }}
             </button>
           </template>
         </div>
 
         <!-- Mobile Menu Button -->
-        <button 
-          @click="toggleMobileMenu"
-          class="md:hidden p-2"
-        >
+        <button @click="toggleMobileMenu" class="md:hidden p-2">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
       </div>
@@ -111,44 +83,32 @@
       <!-- Mobile Menu -->
       <div v-if="showMobileMenu" class="md:hidden mt-4 pb-4">
         <div class="space-y-2">
-          <router-link 
-            to="/" 
-            class="block px-3 py-2 text-gray-700 hover:text-primary transition-colors font-medium"
-            @click="closeMobileMenu"
-          >
-            Home
+          <router-link to="/" class="block px-3 py-2 text-gray-700 hover:text-primary transition-colors font-medium"
+            @click="closeMobileMenu">
+            {{ $t('header.home') }}
           </router-link>
-          <router-link 
-            to="/services" 
+          <router-link to="/services"
             class="block px-3 py-2 text-gray-700 hover:text-primary transition-colors font-medium"
-            @click="closeMobileMenu"
-          >
-            Services
+            @click="closeMobileMenu">
+            {{ $t('header.services') }}
           </router-link>
-          <router-link 
-            to="/market-prices" 
+          <router-link to="/market-prices"
             class="block px-3 py-2 text-gray-700 hover:text-primary transition-colors font-medium"
-            @click="closeMobileMenu"
-          >
-            Market Prices
+            @click="closeMobileMenu">
+            {{ $t('header.marketPrices') }}
           </router-link>
-          <router-link 
-            to="/community" 
+          <router-link to="/community"
             class="block px-3 py-2 text-gray-700 hover:text-primary transition-colors font-medium"
-            @click="closeMobileMenu"
-          >
-            Community
+            @click="closeMobileMenu">
+            {{ $t('header.community') }}
           </router-link>
-          
+
           <div class="border-t pt-4 mt-4">
             <!-- Language Selection for Mobile -->
             <div class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Language</label>
-              <select 
-                v-model="selectedLanguage"
-                @change="updateLanguage"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
-              >
+              <label class="block text-sm font-medium text-gray-700 mb-2">{{ $t('header.language') }}</label>
+              <select v-model="selectedLanguage" @change="updateLanguage"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary">
                 <option value="en">English</option>
                 <option value="hi">हिंदी (Hindi)</option>
                 <option value="bn">বাংলা (Bengali)</option>
@@ -162,34 +122,26 @@
             </div>
 
             <template v-if="!isAuthenticated">
-              <router-link 
-                to="/login" 
+              <router-link to="/login"
                 class="block bg-primary text-white px-3 py-2 rounded-lg hover:bg-green-600 transition-colors font-medium text-center"
-                @click="closeMobileMenu"
-              >
-                Login
+                @click="closeMobileMenu">
+                {{ $t('header.login') }}
               </router-link>
             </template>
             <template v-else>
-              <router-link 
-                to="/dashboard" 
+              <router-link to="/dashboard"
                 class="block px-3 py-2 text-gray-700 hover:text-primary transition-colors font-medium"
-                @click="closeMobileMenu"
-              >
-                Dashboard
+                @click="closeMobileMenu">
+                {{ $t('header.dashboard') }}
               </router-link>
-              <router-link 
-                to="/profile" 
+              <router-link to="/profile"
                 class="block px-3 py-2 text-gray-700 hover:text-primary transition-colors font-medium"
-                @click="closeMobileMenu"
-              >
-                Profile
+                @click="closeMobileMenu">
+                  {{ $t('header.profile') }}
               </router-link>
-              <button 
-                @click="logout"
-                class="block w-full text-left px-3 py-2 text-gray-700 hover:text-red-600 transition-colors font-medium"
-              >
-                Logout
+              <button @click="logout"
+                class="block w-full text-left px-3 py-2 text-gray-700 hover:text-red-600 transition-colors font-medium">
+                {{ $t('header.logout') }}
               </button>
             </template>
           </div>
@@ -202,11 +154,13 @@
 <script>
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 export default {
   name: 'AppHeader',
   setup() {
     const router = useRouter()
+    const { locale } = useI18n()
     const showMobileMenu = ref(false)
     const selectedLanguage = ref('en')
 
@@ -238,7 +192,8 @@ export default {
     }
 
     const updateLanguage = () => {
-      // Update language in localStorage
+      locale.value = selectedLanguage.value
+
       const savedUser = localStorage.getItem('user')
       if (savedUser) {
         try {
@@ -250,7 +205,6 @@ export default {
         }
       }
 
-      // Close mobile menu if open
       closeMobileMenu()
     }
 
@@ -261,7 +215,7 @@ export default {
       localStorage.removeItem('token_type')
       localStorage.removeItem('expires_in')
       localStorage.removeItem('user')
-      
+
       router.push('/')
       closeMobileMenu()
     }
@@ -276,7 +230,8 @@ export default {
       toggleMobileMenu,
       closeMobileMenu,
       updateLanguage,
-      logout
+      logout,
+      locale
     }
   }
 }

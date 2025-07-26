@@ -8,10 +8,10 @@
       <!-- Page Header -->
       <div class="text-center mb-8">
         <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-          Farmer Community Forum
+          {{ $t('community.title') }}
         </h1>
         <p class="text-lg text-gray-600">
-          Connect with fellow farmers, share experiences, and get expert advice
+          {{ $t('community.subtitle') }}
         </p>
       </div>
 
@@ -19,19 +19,19 @@
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <div class="bg-white rounded-lg p-4 text-center shadow-sm">
           <div class="text-2xl font-bold text-primary">15.2K</div>
-          <div class="text-sm text-gray-600">Active Members</div>
+          <div class="text-sm text-gray-600">{{ $t('community.activeMembers') }}</div>
         </div>
         <div class="bg-white rounded-lg p-4 text-center shadow-sm">
           <div class="text-2xl font-bold text-brown">2.8K</div>
-          <div class="text-sm text-gray-600">Discussions</div>
+          <div class="text-sm text-gray-600">{{ $t('community.discussions') }}</div>
         </div>
         <div class="bg-white rounded-lg p-4 text-center shadow-sm">
           <div class="text-2xl font-bold text-earth-600">450</div>
-          <div class="text-sm text-gray-600">Experts</div>
+          <div class="text-sm text-gray-600">{{ $t('community.experts') }}</div>
         </div>
         <div class="bg-white rounded-lg p-4 text-center shadow-sm">
           <div class="text-2xl font-bold text-green-600">98%</div>
-          <div class="text-sm text-gray-600">Solved</div>
+          <div class="text-sm text-gray-600">{{ $t('community.solved') }}</div>
         </div>
       </div>
 
@@ -39,7 +39,7 @@
       <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
         <!-- Categories Sidebar -->
         <div class="bg-white rounded-xl shadow-md p-6">
-          <h2 class="text-lg font-semibold text-gray-900 mb-4">Categories</h2>
+          <h2 class="text-lg font-semibold text-gray-900 mb-4">{{ $t('community.categories') }}</h2>
           <div class="space-y-2">
             <button 
               v-for="category in categories" 
@@ -67,7 +67,7 @@
             <svg class="w-5 h-5 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
             </svg>
-            Ask a Question
+            {{ $t('community.askQuestion') }}
           </button>
         </div>
 
@@ -86,15 +86,15 @@
                   FEATURED
                 </div>
                 <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                  Best Practices for Organic Farming in Monsoon Season
+                  {{ $t('community.featuredTitle') }}
                 </h3>
                 <p class="text-gray-600 mb-3">
-                  Join our expert-led discussion on sustainable farming techniques during the rainy season. Share your experiences and learn from successful organic farmers.
+                  {{ $t('community.featuredDescription') }}
                 </p>
                 <div class="flex items-center text-sm text-gray-500">
-                  <span>Dr. Priya Sharma • Agricultural Expert</span>
+                  <span>{{ $t('community.featuredBy', { name: 'Dr. Priya Sharma' }) }}</span>
                   <span class="mx-2">•</span>
-                  <span>245 participants</span>
+                  <span>{{ $t('community.participants', { count: 245 }) }}</span>
                 </div>
               </div>
             </div>
@@ -134,14 +134,14 @@
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd"/>
                     </svg>
-                    <span>{{ thread.replies }} replies</span>
+                    <span>{{ $t('community.replies', { count: thread.replies }) }}</span>
                   </div>
                   <div class="flex items-center space-x-1">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
                       <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
                     </svg>
-                    <span>{{ thread.views }} views</span>
+                    <span>{{ $t('community.views', { count: thread.views }) }}</span>
                   </div>
                   <div class="flex items-center space-x-1">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -154,7 +154,7 @@
                   <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                   </svg>
-                  <span class="text-xs">Expert Reply</span>
+                  <span class="text-xs">{{ $t('community.expertReply') }}</span>
                 </div>
               </div>
             </div>
@@ -163,7 +163,7 @@
           <!-- Load More -->
           <div class="text-center">
             <button class="bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors">
-              Load More Discussions
+              {{ $t('community.loadMore') }}
             </button>
           </div>
         </div>
@@ -173,7 +173,7 @@
     <!-- Ask Question Modal -->
     <div v-if="showAskModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div class="bg-white rounded-xl max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
-        <h3 class="text-xl font-bold text-gray-900 mb-6">Ask a Question</h3>
+        <h3 class="text-xl font-bold text-gray-900 mb-6">{{ $t('community.askModalTitle') }}</h3>
         <form @submit.prevent="submitQuestion">
           <div class="space-y-4">
             <div>
@@ -183,39 +183,39 @@
                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
                 required
               >
-                <option value="">Select a category</option>
+                <option value="">{{ $t('community.form.categoryPlaceholder') }}</option>
                 <option v-for="category in categories" :key="category.id" :value="category.id">
                   {{ category.name }}
                 </option>
               </select>
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Question Title</label>
+              <label class="block text-sm font-medium text-gray-700 mb-2">{{ $t('community.form.title') }}</label>
               <input 
                 v-model="questionForm.title"
                 type="text" 
                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
-                placeholder="What's your farming question?"
+                :placeholder="$t('community.form.titlePlaceholder')"
                 required
               >
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Describe your question</label>
+              <label class="block text-sm font-medium text-gray-700 mb-2">{{ $t('community.form.description') }}</label>
               <textarea 
                 v-model="questionForm.description"
                 rows="6" 
                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
-                placeholder="Provide details about your farming situation, what you've tried, and what specific help you need..."
+                :placeholder="$t('community.form.descriptionPlaceholder')"
                 required
               ></textarea>
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Add Tags (optional)</label>
+              <label class="block text-sm font-medium text-gray-700 mb-2">{{ $t('community.form.tags') }}</label>
               <input 
                 v-model="questionForm.tags"
                 type="text" 
                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary"
-                placeholder="e.g. rice, organic, pest-control (separate with commas)"
+                :placeholder="$t('community.form.tagsPlaceholder')"
               >
             </div>
           </div>
@@ -225,13 +225,13 @@
               @click="closeAskModal"
               class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50"
             >
-              Cancel
+              {{ $t('community.form.cancel') }}
             </button>
             <button 
               type="submit"
               class="flex-1 px-4 py-2 bg-primary text-white rounded-md hover:bg-green-600"
             >
-              Post Question
+              {{ $t('community.form.post') }}
             </button>
           </div>
         </form>
