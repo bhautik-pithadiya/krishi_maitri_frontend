@@ -67,21 +67,21 @@
   },
   "dashboard": {
     "greeting": {
+      "welcome": "Welcome, {name}!",
+      "description": "Here's what's happening in your agricultural world today.",
       "morning": "Good morning!",
       "afternoon": "Good afternoon!",
       "evening": "Good evening!"
     },
-    "welcomeBack": "Welcome back, {name}!",
-    "intro": "Here's what's happening in your agricultural world today.",
     "weather": {
       "title": "Today's Weather",
-      "humidity": "Humidity: {value}%",
-      "rainfall": "This Week's Rainfall",
-      "advice": "{advice}",
+      "humidity": "Humidity: {humidity}%",
+      "forecast": "Forecast",
+      "rainfallTitle": "This Week's Rainfall",
       "condition": {
         "partlyCloudy": "Partly Cloudy"
       },
-      "rainfallAdvice": {
+      "advice": {
         "goodForCrops": "Good for crops"
       }
     },
@@ -96,26 +96,31 @@
         "description": "Live crop rates",
         "cta": "View Prices →"
       },
-      "govtSchemes": {
-        "title": "Govt Schemes",
+      "governmentSchemes": {
+        "title": "Government Schemes",
         "description": "Benefits & subsidies",
         "cta": "Explore →"
       }
     },
     "news": {
-      "title": "Agriculture News & Updates",
-      "timeAgo": "{time} ago"
+      "title": "Agriculture News & Updates"
     },
-    "services": {
+    "recentServices": {
       "title": "Recent Services",
-      "viewAll": "View All Services",
+      "cta": "View All Services",
       "soilTesting": "Soil Testing",
       "expertConsultation": "Expert Consultation",
       "equipmentRental": "Equipment Rental"
     },
-    "tips": {
+    "farmingTips": {
       "title": "Today's Farming Tips",
-      "cta": "Join Community Discussion"
+      "cta": "Join Community Discussion",
+      "optimalWateringTime": "Optimal Watering Time",
+      "optimalWateringTimeDescription": "Water your crops early morning or late evening for best absorption.",
+      "pestControlTip": "Natural Pest Control",
+      "pestControlTipDescription": "Use neem oil spray to protect crops from pests naturally.",
+      "soilHealth": "Soil Health Check",
+      "soilHealthDescription": "Test your soil pH regularly for optimal crop growth."
     },
     "status": {
       "Completed": "Completed",

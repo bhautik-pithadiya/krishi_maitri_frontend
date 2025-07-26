@@ -15,157 +15,118 @@
         </p>
       </div>
 
-      <!-- Weather Widget -->
-      <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl p-6 text-white mb-8">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
-          <div>
-            <h2 class="text-xl font-semibold mb-2">{{ $t('dashboard.weather.title') }}</h2>
-            <p class="text-blue-100 mb-1">{{ userData.location }}</p>
-            <div class="flex items-center space-x-4">
-              <div class="text-3xl font-bold">{{ weather.temperature }}°C</div>
-              <div class="text-blue-100">
-                <div>{{ weather.condition }}</div>
-                <div class="text-sm">{{ $t('dashboard.weather.humidity', { humidity: weather.humidity }) }}</div>
+      <!-- Weather Widget - Full Width -->
+      <div class="mb-8">
+        <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl p-6 text-white">
+          <div class="flex flex-col lg:flex-row lg:justify-between lg:items-start">
+            <div class="lg:flex-1">
+              <h2 class="text-xl font-semibold mb-2 flex items-center">
+                {{ $t('dashboard.weather.title') }}
+                <div v-if="weatherLoading" class="ml-2">
+                  <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                </div>
+              </h2>
+              <p class="text-blue-100 mb-4">{{ weather.location || userData.location }}</p>
+              <div v-if="!weatherError" class="flex items-center space-x-4 mb-4">
+                <div class="text-3xl font-bold">{{ Math.round(weather.temperature) }}°C</div>
+                <div class="text-blue-100">
+                  <div class="capitalize">{{ weather.condition }}</div>
+                  <div class="text-sm">{{ $t('dashboard.weather.humidity', { humidity: weather.humidity }) }}</div>
+                </div>
+              </div>
+              <div v-if="weatherError" class="text-blue-100 text-sm">
+                {{ weatherError }}
+              </div>
+              <div v-if="!weatherError">
+                <div class="text-blue-100 mb-1">{{ $t('dashboard.weather.forecast') }}</div>
+                <div class="text-sm text-blue-100">{{ weather.forecast }}</div>
               </div>
             </div>
-          </div>
-          <div class="mt-4 md:mt-0 text-right">
-            <div class="text-blue-100 mb-1">{{ $t('dashboard.weather.rainfallTitle') }}</div>
-            <div class="text-2xl font-bold">{{ weather.rainfall }}mm</div>
-            <div class="text-sm text-blue-100">{{ weather.rainfallAdvice }}</div>
+            <!-- Forecast data section -->
+            <div v-if="!weatherError && weather.forecast5Day && weather.forecast5Day.length > 0" class="mt-4 lg:mt-0 lg:ml-6 lg:flex-1">
+              <div class="text-xs text-blue-200 mb-2">Weather Forecast</div>
+              <div class="flex space-x-2 overflow-x-auto pb-2 custom-scrollbar">
+                <div v-for="(forecast, index) in weather.forecast5Day" :key="index" 
+                     v-show="index % 4 === 0"
+                     class="bg-blue-700 bg-opacity-50 rounded p-2 flex-shrink-0 text-center min-w-[80px]">
+                  <div class="text-xs text-blue-200">{{ formatAPIDateTime(forecast.dt_txt) }}</div>
+                  <div class="text-sm font-semibold">{{ Math.round(forecast.main.temp) }}°</div>
+                  <div class="text-xs text-blue-200 capitalize">{{ forecast.weather[0].description.split(' ')[0] }}</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Quick Action Cards -->
+      <!-- Quick Action Cards - Bottom Section -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         <!-- Book Service Card -->
-        <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer"
+        <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer flex flex-col justify-between"
           @click="navigateTo('/services')">
-          <div class="flex items-center space-x-4">
-            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <div>
-              <h3 class="text-lg font-semibold text-gray-900">{{ $t('dashboard.actions.bookService.title') }}</h3>
-              <p class="text-sm text-gray-600">{{ $t('dashboard.actions.bookService.description') }}</p>
+          <div>
+            <div class="flex items-center space-x-4 mb-4">
+              <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
+                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900">{{ $t('dashboard.actions.bookService.title') }}</h3>
+                <p class="text-sm text-gray-600">{{ $t('dashboard.actions.bookService.description') }}</p>
+              </div>
             </div>
           </div>
-          <div class="mt-4">
-            <span class="text-primary font-medium hover:text-green-600">{{ $t('dashboard.actions.bookService.cta')
-            }}</span>
+          <div>
+            <span class="text-primary font-medium hover:text-green-600">{{ $t('dashboard.actions.bookService.cta') }}</span>
           </div>
         </div>
 
         <!-- Market Prices Card -->
-        <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer"
+        <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer flex flex-col justify-between"
           @click="navigateTo('/market-prices')">
-          <div class="flex items-center space-x-4">
-            <div class="w-12 h-12 bg-brown rounded-full flex items-center justify-center">
-              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
-              </svg>
-            </div>
-            <div>
-              <h3 class="text-lg font-semibold text-gray-900">{{ $t('dashboard.actions.marketPrices.title') }}</h3>
-              <p class="text-sm text-gray-600">{{ $t('dashboard.actions.marketPrices.description') }}</p>
+          <div>
+            <div class="flex items-center space-x-4 mb-4">
+              <div class="w-12 h-12 bg-brown rounded-full flex items-center justify-center">
+                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900">{{ $t('dashboard.actions.marketPrices.title') }}</h3>
+                <p class="text-sm text-gray-600">{{ $t('dashboard.actions.marketPrices.description') }}</p>
+              </div>
             </div>
           </div>
-          <div class="mt-4">
-            <span class="text-primary font-medium hover:text-green-600">{{ $t('dashboard.actions.marketPrices.cta')
-            }}</span>
+          <div>
+            <span class="text-primary font-medium hover:text-green-600">{{ $t('dashboard.actions.marketPrices.cta') }}</span>
           </div>
         </div>
 
         <!-- Government Schemes Card -->
-        <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer">
-          <div class="flex items-center space-x-4">
-            <div class="w-12 h-12 bg-earth-600 rounded-full flex items-center justify-center">
-              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd"
-                  d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
-                  clip-rule="evenodd" />
-              </svg>
-            </div>
-            <div>
-              <h3 class="text-lg font-semibold text-gray-900">{{ $t('dashboard.actions.governmentSchemes.title') }}</h3>
-              <p class="text-sm text-gray-600">{{ $t('dashboard.actions.governmentSchemes.description') }}</p>
-            </div>
-          </div>
-          <div class="mt-4">
-            <span class="text-primary font-medium hover:text-green-600">{{ $t('dashboard.actions.governmentSchemes.cta')
-            }}</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- News Ticker -->
-      <div class="bg-white rounded-xl shadow-md p-6 mb-8">
-        <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-          <svg class="w-5 h-5 text-primary mr-2" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd"
-              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-              clip-rule="evenodd" />
-          </svg>
-          {{ $t('dashboard.news.title') }}
-        </h2>
-        <div class="space-y-4">
-          <div v-for="(news, index) in agricultureNews" :key="index" class="flex items-start space-x-3 pb-4"
-            :class="{ 'border-b border-gray-200': index < agricultureNews.length - 1 }">
-            <div class="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-            <div>
-              <h3 class="font-medium text-gray-900">{{ news.title }}</h3>
-              <p class="text-sm text-gray-600 mt-1">{{ news.summary }}</p>
-              <span class="text-xs text-gray-500">{{ news.time }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Recent Activities -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- My Services -->
-        <div class="bg-white rounded-xl shadow-md p-6">
-          <h2 class="text-xl font-semibold text-gray-900 mb-4">{{ $t('dashboard.recentServices.title') }}</h2>
-          <div class="space-y-4">
-            <div v-for="(service, index) in recentServices" :key="index"
-              class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-              <div>
-                <h3 class="font-medium text-gray-900">{{ service.name }}</h3>
-                <p class="text-sm text-gray-600">{{ service.date }}</p>
-              </div>
-              <span>{{ t('dashboard.status.' + service.status) }}</span>
-            </div>
-          </div>
-          <router-link to="/services" class="block mt-4 text-center text-primary font-medium hover:text-green-600">
-            {{ $t('dashboard.recentServices.cta') }}
-          </router-link>
-        </div>
-
-        <!-- Quick Tips -->
-        <div class="bg-white rounded-xl shadow-md p-6">
-          <h2 class="text-xl font-semibold text-gray-900 mb-4">{{ $t('dashboard.farmingTips.title') }}</h2>
-          <div class="space-y-4">
-            <div v-for="(tip, index) in farmingTips" :key="index" class="flex items-start space-x-3">
-              <div class="w-8 h-8 bg-primary bg-opacity-10 rounded-full flex items-center justify-center flex-shrink-0">
-                <svg class="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20">
+        <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer flex flex-col justify-between">
+          <div>
+            <div class="flex items-center space-x-4 mb-4">
+              <div class="w-12 h-12 bg-earth-600 rounded-full flex items-center justify-center">
+                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd"
-                    d="M9.663 17h4.673a1.5 1.5 0 001.2-2.4L6.5 2.4A1.5 1.5 0 005 2.4v.6a3 3 0 013 3v11zM9 6a3 3 0 100 6 3 3 0 000-6z"
+                    d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
                     clip-rule="evenodd" />
                 </svg>
               </div>
               <div>
-                <h3 class="font-medium text-gray-900">{{ tip.title }}</h3>
-                <p class="text-sm text-gray-600 mt-1">{{ tip.description }}</p>
+                <h3 class="text-lg font-semibold text-gray-900">{{ $t('dashboard.actions.governmentSchemes.title') }}</h3>
+                <p class="text-sm text-gray-600">{{ $t('dashboard.actions.governmentSchemes.description') }}</p>
               </div>
             </div>
           </div>
-          <router-link to="/community" class="block mt-4 text-center text-primary font-medium hover:text-green-600">
-            {{ $t('dashboard.farmingTips.cta') }}
-          </router-link>
+          <div>
+            <span class="text-primary font-medium hover:text-green-600">{{ $t('dashboard.actions.governmentSchemes.cta') }}</span>
+          </div>
         </div>
       </div>
     </main>
@@ -173,14 +134,13 @@
     <!-- Footer -->
     <AppFooter />
   </div>
-</template>
-
-<script>
+</template><script>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import AppHeader from '../components/AppHeader.vue'
 import AppFooter from '../components/AppFooter.vue'
 import { useI18n } from 'vue-i18n'
+import { apiConfig } from '../config/api.js'
 
 export default {
   name: 'Dashboard',
@@ -192,6 +152,10 @@ export default {
     const router = useRouter()
     const { t } = useI18n()
 
+    // Weather state
+    const weatherLoading = ref(false)
+    const weatherError = ref('')
+
     const userData = computed(() => {
       const user = localStorage.getItem('user')
       if (user) {
@@ -199,6 +163,8 @@ export default {
         return {
           name: parsedUser.display_name || parsedUser.name || 'Farmer',
           location: parsedUser.farmDetails?.location?.address || parsedUser.location || 'India',
+          latitude: parsedUser.farmDetails?.location?.latitude,
+          longitude: parsedUser.farmDetails?.location?.longitude,
           email: parsedUser.email || '',
           mobile: parsedUser.mobile || parsedUser.phone_number || '',
           farmSize: parsedUser.farmDetails?.farmSize || '',
@@ -206,74 +172,110 @@ export default {
           experience: parsedUser.farmDetails?.experience || ''
         }
       }
-      return { name: 'Farmer', location: 'India', email: '', mobile: '', farmSize: '', cropName: '', experience: '' }
+      return { 
+        name: 'Farmer', 
+        location: 'India', 
+        latitude: null, 
+        longitude: null, 
+        email: '', 
+        mobile: '', 
+        farmSize: '', 
+        cropName: '', 
+        experience: '' 
+      }
     })
 
     const weather = ref({
       temperature: 28,
       condition: t('dashboard.weather.condition.partlyCloudy'),
       humidity: 65,
-      rainfall: 45,
-      rainfallAdvice: t('dashboard.weather.advice.goodForCrops')
+      location: '',
+      forecast: '',
+      forecast5Day: []
     })
 
-    const agricultureNews = ref([
-      {
-        title: 'New Crop Insurance Scheme Launched',
-        summary: 'Government introduces enhanced coverage for Kharif crops with 50% premium subsidy.',
-        time: '2 hours ago'
-      },
-      {
-        title: 'Monsoon Update: Normal Rainfall Expected',
-        summary: 'IMD predicts normal monsoon this year, beneficial for agriculture productivity.',
-        time: '5 hours ago'
-      },
-      {
-        title: 'Organic Farming Incentives Increased',
-        summary: 'Additional ₹2000 per hectare announced for farmers adopting organic methods.',
-        time: '1 day ago'
+    // Fetch weather forecast from API
+    const fetchWeatherForecast = async () => {
+      const user = userData.value
+      
+      // Check if we have latitude and longitude
+      if (!user.latitude || !user.longitude) {
+        weatherError.value = 'Location data not available. Please update your profile with location information.'
+        return
       }
-    ])
 
-    const recentServices = ref([
-      { name: t('dashboard.recentServices.soilTesting'), date: 'Jan 20, 2025', status: 'Completed' },
-      { name: t('dashboard.recentServices.expertConsultation'), date: 'Jan 18, 2025', status: 'In Progress' },
-      { name: t('dashboard.recentServices.equipmentRental'), date: 'Jan 15, 2025', status: 'Completed' }
-    ])
+      weatherLoading.value = true
+      weatherError.value = ''
 
-    const farmingTips = ref([
-      {
-        title: t('dashboard.farmingTips.optimalWateringTime'),
-        description: t('dashboard.farmingTips.optimalWateringTimeDescription')
-      },
-      {
-        title: t('dashboard.farmingTips.pestControlTip'),
-        description: t('dashboard.farmingTips.pestControlTipDescription')
-      },
-      {
-        title: t('dashboard.farmingTips.soilHealth'),
-        description: t('dashboard.farmingTips.soilHealthDescription')
+      try {
+        const requestData = {
+          lat: user.latitude,
+          lon: user.longitude,
+          location: user.location
+        }
+
+        const response = await fetch(apiConfig.weather.forecast, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+          },
+          body: JSON.stringify(requestData)
+        })
+
+        if (!response.ok) {
+          throw new Error(`Weather API failed: ${response.status}`)
+        }
+
+        const data = await response.json()
+        
+        // Update weather data with API response
+        weather.value = {
+          temperature: data.temperature_celsius,
+          condition: data.forecast,
+          humidity: data.details?.list?.[0]?.main?.humidity || 65,
+          location: data.location,
+          forecast: data.forecast,
+          forecast5Day: data.details?.list || []
+        }
+
+      } catch (error) {
+        console.error('Weather API Error:', error)
+        weatherError.value = 'Unable to fetch weather data. Showing default information.'
+        
+        // Keep default weather data on error
+        weather.value = {
+          temperature: 28,
+          condition: t('dashboard.weather.condition.partlyCloudy'),
+          humidity: 65,
+          location: user.location,
+          forecast: t('dashboard.weather.advice.goodForCrops'),
+          forecast5Day: []
+        }
+      } finally {
+        weatherLoading.value = false
       }
-    ])
-
-    const getGreeting = () => {
-      const hour = new Date().getHours()
-      if (hour < 12) return t('dashboard.greeting.morning')
-      if (hour < 17) return t('dashboard.greeting.afternoon')
-      return t('dashboard.greeting.evening')
     }
 
-    const getStatusClass = (status) => {
-      switch (status) {
-        case 'Completed':
-          return 'bg-green-100 text-green-800'
-        case 'In Progress':
-          return 'bg-yellow-100 text-yellow-800'
-        case 'Pending':
-          return 'bg-gray-100 text-gray-800'
-        default:
-          return 'bg-gray-100 text-gray-800'
+    // Format API datetime for display (show actual time from API)
+    const formatAPIDateTime = (dateTimeString) => {
+      const date = new Date(dateTimeString)
+      
+      // Format as "MM/DD HH:mm" or "DD/MM HH:mm" based on locale
+      const dateOptions = { 
+        month: '2-digit', 
+        day: '2-digit'
       }
+      const timeOptions = { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: false
+      }
+      
+      const dateStr = date.toLocaleDateString('en-US', dateOptions)
+      const timeStr = date.toLocaleTimeString('en-US', timeOptions)
+      
+      return `${dateStr} ${timeStr}`
     }
 
     const navigateTo = (path) => {
@@ -281,21 +283,63 @@ export default {
     }
 
     onMounted(() => {
-      // Simulate weather data fetch based on location
-      // In real app, this would be an API call
+      // Fetch real weather data when component mounts
+      fetchWeatherForecast()
     })
 
     return {
       userData,
       weather,
-      agricultureNews,
-      recentServices,
-      farmingTips,
-      getGreeting,
-      getStatusClass,
+      weatherLoading,
+      weatherError,
       navigateTo,
+      formatAPIDateTime,
+      fetchWeatherForecast,
       t
     }
   }
 }
 </script>
+
+<style scoped>
+/* Custom scrollbar for weather forecast */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:active {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* Hide scrollbar on mobile for cleaner look */
+@media (max-width: 768px) {
+  .custom-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .custom-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+}
+</style>

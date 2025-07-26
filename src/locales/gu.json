@@ -67,22 +67,22 @@
   },
   "dashboard": {
     "greeting": {
+      "welcome": "આવકાર, {name}!",
+      "description": "આજના કૃષિ વિશ્વની ઘટનાઓ અહીં જુઓ.",
       "morning": "શુભ સવાર!",
       "afternoon": "શુભ બપોર!",
       "evening": "શુભ સાંજ!"
     },
-    "welcomeBack": "ફરી આવકારો, {name}!",
-    "intro": "આજના કૃષિ વિશ્વની ઘટનાઓ અહીં જુઓ.",
     "weather": {
       "title": "આજનું હવામાન",
-      "humidity": "ભેજ: {value}%",
-      "rainfall": "આ અઠવાડિયાનો વરસાદ",
-      "advice": "{advice}",
+      "humidity": "ભેજ: {humidity}%",
+      "forecast": "હવામાન આગાહી",
+      "rainfallTitle": "આ અઠવાડિયાનો વરસાદ",
       "condition": {
-        "partlyCloudy": "સંસદી વરસાદ"
+        "partlyCloudy": "આંશિક વાદળછાયું"
       },
-      "rainfallAdvice": {
-        "goodForCrops": "ખેતી માટે સારું"
+      "advice": {
+        "goodForCrops": "પાક માટે સારું"
       }
     },
     "actions": {
@@ -96,26 +96,31 @@
         "description": "જીવંત પાકના ભાવ",
         "cta": "ભાવ જુઓ →"
       },
-      "govtSchemes": {
-        "title": "સરકારી યોજના",
+      "governmentSchemes": {
+        "title": "સરકારી યોજનાઓ",
         "description": "લાભો અને સબસિડી",
-        "cta": "અધિક જાણો →"
+        "cta": "વધુ જાણો →"
       }
     },
     "news": {
-      "title": "કૃષિ સમાચાર અને અપડેટ્સ",
-      "timeAgo": "{time} પહેલા"
+      "title": "કૃષિ સમાચાર અને અપડેટ્સ"
     },
-    "services": {
-      "title": "હાલની સેવાઓ",
-      "viewAll": "બધી સેવાઓ જુઓ",
+    "recentServices": {
+      "title": "તાજેતરની સેવાઓ",
+      "cta": "બધી સેવાઓ જુઓ",
       "soilTesting": "માટી પરીક્ષણ",
       "expertConsultation": "તજજ્ઞ સલાહ",
       "equipmentRental": "ઉપકરણ ભાડે"
     },
-    "tips": {
+    "farmingTips": {
       "title": "આજની ખેતી ટીપ્સ",
-      "cta": "ચર્ચામાં જોડાઓ"
+      "cta": "ચર્ચામાં જોડાઓ",
+      "optimalWateringTime": "યોગ્ય પાણી આપવાનો સમય",
+      "optimalWateringTimeDescription": "સારા શોષણ માટે તમારા પાકને વહેલી સવારે અથવા મોડી સાંજે પાણી આપો.",
+      "pestControlTip": "કુદરતી જંતુ નિયંત્રણ",
+      "pestControlTipDescription": "પાકને કુદરતી રીતે જંતુઓથી બચાવવા માટે નીમ તેલના છંટકાવનો ઉપયોગ કરો.",
+      "soilHealth": "માટીની તંદુરસ્તી તપાસ",
+      "soilHealthDescription": "શ્રેષ્ઠ પાકની વૃદ્ધિ માટે નિયમિત માટીની pH તપાસો."
     },
     "status": {
       "Completed": "પૂર્ણ થયું",

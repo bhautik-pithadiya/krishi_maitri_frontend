@@ -41,6 +41,13 @@ class ApiConfig {
     }
   }
 
+  // Weather endpoints
+  get weather() {
+    return {
+      forecast: `${this.apiURL}/weather/forecast`
+    }
+  }
+
   // Helper method to get full API URL for any endpoint
   getEndpoint(path) {
     return `${this.apiURL}${path.startsWith('/') ? path : '/' + path}`
