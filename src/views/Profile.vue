@@ -398,10 +398,36 @@ export default {
       const savedUser = localStorage.getItem('user')
       if (savedUser) {
         const userData = JSON.parse(savedUser)
-        user.value = { ...user.value, ...userData }
+        
+        // Map API response structure to profile structure
+        const mappedUser = {
+          name: userData.display_name || userData.name || 'Farmer',
+          mobile: userData.mobile || userData.phone_number || '',
+          email: userData.email || '',
+          location: userData.farmDetails?.location?.address || userData.location || '',
+          state: extractStateFromLocation(userData.farmDetails?.location?.address || userData.location || ''),
+          farmSize: userData.farmDetails?.farmSize || '',
+          primaryCrops: userData.farmDetails?.cropName || '',
+          language: userData.language || 'en',
+          memberSince: userData.created_at ? new Date(userData.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'Jan 2024',
+          servicesUsed: 12, // This would come from another API call
+          questionsAsked: 8, // This would come from another API call
+          helpfulAnswers: 15 // This would come from another API call
+        }
+        
+        user.value = { ...user.value, ...mappedUser }
         editableUser.value = { ...user.value }
       }
     })
+
+    const extractStateFromLocation = (location) => {
+      // Simple function to extract state from address string
+      const parts = location.split(',')
+      if (parts.length >= 2) {
+        return parts[parts.length - 2].trim()
+      }
+      return 'India'
+    }
 
     return {
       isEditing,

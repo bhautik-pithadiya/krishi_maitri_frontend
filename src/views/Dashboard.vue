@@ -186,7 +186,19 @@ export default {
 
     const userData = computed(() => {
       const user = localStorage.getItem('user')
-      return user ? JSON.parse(user) : { name: 'Farmer', location: 'India' }
+      if (user) {
+        const parsedUser = JSON.parse(user)
+        return {
+          name: parsedUser.display_name || parsedUser.name || 'Farmer',
+          location: parsedUser.farmDetails?.location?.address || parsedUser.location || 'India',
+          email: parsedUser.email || '',
+          mobile: parsedUser.mobile || parsedUser.phone_number || '',
+          farmSize: parsedUser.farmDetails?.farmSize || '',
+          cropName: parsedUser.farmDetails?.cropName || '',
+          experience: parsedUser.farmDetails?.experience || ''
+        }
+      }
+      return { name: 'Farmer', location: 'India', email: '', mobile: '', farmSize: '', cropName: '', experience: '' }
     })
 
     const weather = ref({

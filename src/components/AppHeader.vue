@@ -173,7 +173,9 @@ export default {
     const showMobileMenu = ref(false)
 
     const isAuthenticated = computed(() => {
-      return localStorage.getItem('isAuthenticated') === 'true'
+      const token = localStorage.getItem('access_token')
+      const authFlag = localStorage.getItem('isAuthenticated')
+      return authFlag === 'true' && token !== null
     })
 
     const toggleMobileMenu = () => {
@@ -185,8 +187,13 @@ export default {
     }
 
     const logout = () => {
+      // Clear all authentication data
       localStorage.removeItem('isAuthenticated')
+      localStorage.removeItem('access_token')
+      localStorage.removeItem('token_type')
+      localStorage.removeItem('expires_in')
       localStorage.removeItem('user')
+      
       router.push('/')
       closeMobileMenu()
     }
