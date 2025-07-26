@@ -78,12 +78,13 @@
             <div class="p-6 border-b border-gray-200">
               <div class="flex justify-between items-center">
                 <h2 class="text-xl font-semibold text-gray-900">Profile Information</h2>
-                <button 
+                <!-- Edit Profile button temporarily hidden -->
+                <!-- <button 
                   @click="toggleEdit"
                   class="text-primary hover:text-green-600 font-medium"
                 >
                   {{ isEditing ? 'Cancel' : 'Edit Profile' }}
-                </button>
+                </button> -->
               </div>
             </div>
             <div class="p-6">
