@@ -15,27 +15,26 @@
             <p class="text-lg text-gray-600 leading-relaxed">
               Join thousands of farmers who are transforming their agricultural practices with our comprehensive digital platform. Get expert advice, market insights, and government scheme updates all in one place.
             </p>
-            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+            <div class="flex justify-start">
               <router-link 
                 to="/dashboard"
                 class="bg-primary text-white px-8 py-4 rounded-lg hover:bg-green-600 transition-colors font-semibold text-center"
               >
                 Get Started
               </router-link>
-              <button class="border-2 border-primary text-primary px-8 py-4 rounded-lg hover:bg-primary hover:text-white transition-colors font-semibold">
-                Watch Demo
-              </button>
             </div>
           </div>
           <div class="relative">
             <div class="bg-earth-100 rounded-lg p-8 text-center">
-              <!-- Placeholder for farmer image -->
-              <div class="w-full h-80 bg-gradient-to-br from-green-200 to-earth-200 rounded-lg flex items-center justify-center">
-                <svg class="w-32 h-32 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
+              <!-- Hero farmer image -->
+              <div class="w-full h-80 rounded-lg overflow-hidden">
+                <img 
+                  src="/src/assets/images/hero-farmer.jpg" 
+                  alt="Farmer working in the field" 
+                  class="w-full h-full object-cover rounded-lg"
+                />
               </div>
-              <p class="mt-4 text-gray-600 italic">Farmer working in the field</p>
+              <p class="mt-4 text-gray-600 italic">Empowering farmers with modern technology</p>
             </div>
           </div>
         </div>

@@ -103,8 +103,8 @@
                     <input 
                       v-model="editableUser.mobile"
                       type="tel" 
-                      :disabled="!isEditing"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary disabled:bg-gray-100"
+                      disabled
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-600"
                     >
                   </div>
                   <div>
@@ -112,18 +112,38 @@
                     <input 
                       v-model="editableUser.email"
                       type="email" 
-                      :disabled="!isEditing"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary disabled:bg-gray-100"
+                      disabled
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-600"
                     >
                   </div>
                   <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Village/City</label>
-                    <input 
-                      v-model="editableUser.location"
-                      type="text" 
-                      :disabled="!isEditing"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary disabled:bg-gray-100"
-                    >
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Farm Location</label>
+                    <div v-if="!isEditing" class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-600">
+                      {{ editableUser.location || 'No location set' }}
+                    </div>
+                    <div v-else class="space-y-2">
+                      <button
+                        type="button"
+                        @click="getLocation"
+                        :disabled="gettingLocation"
+                        class="w-full flex items-center justify-center py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary disabled:bg-gray-100 disabled:cursor-not-allowed transition-colors"
+                      >
+                        <svg v-if="gettingLocation" class="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <svg v-else class="h-5 w-5 text-gray-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                        </svg>
+                        {{ gettingLocation ? 'Getting Location...' : (editableUser.location ? 'Update Location' : 'Get Current Location') }}
+                      </button>
+                      <div v-if="editableUser.location" class="text-sm text-gray-600 bg-green-50 p-2 rounded">
+                        📍 Location: {{ editableUser.location }}
+                      </div>
+                      <div v-if="locationError" class="text-sm text-red-600 bg-red-50 p-2 rounded">
+                        ❌ {{ locationError }}
+                      </div>
+                    </div>
                   </div>
                   <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">State</label>
@@ -266,6 +286,8 @@ export default {
     const isEditing = ref(false)
     const loading = ref(true)
     const error = ref('')
+    const gettingLocation = ref(false)
+    const locationError = ref('')
     
     const user = ref({
       uid: '',
@@ -273,6 +295,8 @@ export default {
       mobile: '',
       email: '',
       location: '',
+      latitude: null,
+      longitude: null,
       state: '',
       farmSize: '',
       primaryCrops: '',
@@ -385,6 +409,8 @@ export default {
           mobile: profileData.mobile || profileData.phone_number || '',
           email: profileData.email || '',
           location: profileData.farmDetails?.location?.address || '',
+          latitude: profileData.farmDetails?.location?.latitude || null,
+          longitude: profileData.farmDetails?.location?.longitude || null,
           state: extractStateFromLocation(profileData.farmDetails?.location?.address || ''),
           farmSize: profileData.farmDetails?.farmSize || '',
           primaryCrops: profileData.farmDetails?.cropName || '',
@@ -434,6 +460,8 @@ export default {
         mobile: userData.mobile || userData.phone_number || '',
         email: userData.email || '',
         location: userData.farmDetails?.location?.address || userData.location || '',
+        latitude: userData.farmDetails?.location?.latitude || null,
+        longitude: userData.farmDetails?.location?.longitude || null,
         state: extractStateFromLocation(userData.farmDetails?.location?.address || userData.location || ''),
         farmSize: userData.farmDetails?.farmSize || '',
         primaryCrops: userData.farmDetails?.cropName || '',
@@ -462,6 +490,74 @@ export default {
     const cancelEdit = () => {
       isEditing.value = false
       editableUser.value = { ...user.value }
+      locationError.value = ''
+    }
+
+    const getLocation = () => {
+      if (!navigator.geolocation) {
+        locationError.value = 'Geolocation is not supported by this browser.'
+        return
+      }
+
+      gettingLocation.value = true
+      locationError.value = ''
+
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          editableUser.value.latitude = position.coords.latitude
+          editableUser.value.longitude = position.coords.longitude
+          
+          // Get human-readable address using reverse geocoding
+          try {
+            const response = await fetch(
+              `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=en`
+            )
+            const data = await response.json()
+            
+            if (data && data.locality) {
+              // Create a readable address from the response
+              const addressParts = []
+              if (data.locality) addressParts.push(data.locality)
+              if (data.principalSubdivision) addressParts.push(data.principalSubdivision)
+              if (data.countryName) addressParts.push(data.countryName)
+              
+              editableUser.value.location = addressParts.join(', ')
+              editableUser.value.state = data.principalSubdivision || ''
+            } else {
+              // Fallback to coordinates if address lookup fails
+              editableUser.value.location = `${position.coords.latitude.toFixed(6)}, ${position.coords.longitude.toFixed(6)}`
+            }
+          } catch (error) {
+            console.error('Address lookup failed:', error)
+            // Fallback to coordinates if address lookup fails
+            editableUser.value.location = `${position.coords.latitude.toFixed(6)}, ${position.coords.longitude.toFixed(6)}`
+          }
+          
+          gettingLocation.value = false
+        },
+        (error) => {
+          gettingLocation.value = false
+          switch(error.code) {
+            case error.PERMISSION_DENIED:
+              locationError.value = "Location access denied by user. Please enable location access in your browser settings."
+              break
+            case error.POSITION_UNAVAILABLE:
+              locationError.value = "Location information is unavailable."
+              break
+            case error.TIMEOUT:
+              locationError.value = "Location request timed out."
+              break
+            default:
+              locationError.value = "An unknown error occurred while retrieving location."
+              break
+          }
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
+        }
+      )
     }
 
     const saveProfile = async () => {
@@ -523,6 +619,8 @@ export default {
       isEditing,
       loading,
       error,
+      gettingLocation,
+      locationError,
       user,
       editableUser,
       recentActivity,
@@ -530,6 +628,7 @@ export default {
       userInitials,
       toggleEdit,
       cancelEdit,
+      getLocation,
       saveProfile,
       getActivityIcon,
       getStatusColor,
