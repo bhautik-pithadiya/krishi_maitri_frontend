@@ -18,7 +18,7 @@ jobs:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SERVER_PORT }} # Default 22 if not set
+          port: 5137 # Default 22 if not set
           script: |
             cd /home/bhautikpithadiya12/krishi-mitri/frontend
             git pull origin development
