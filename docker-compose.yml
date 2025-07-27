@@ -1,17 +1,21 @@
-version: '3.9'
-
 services:
   krishi-maitri-ui:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: krishi-maitri-ui
-    port:
-      - "3000:80"
+    ports:
+      - "3000:80"   # Host 3000 → Container 80
     expose:
-      - "80"
+      - "80"        # For internal networking
     restart: unless-stopped
     env_file:
       - /home/bhautikpithadiya12/krishi-mitri/frontend/.env
     environment:
       - NODE_ENV=production
+    networks:
+      - krishi-network
+
+networks:
+  krishi-network:
+    driver: bridge
