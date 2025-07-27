@@ -1,11 +1,13 @@
+version: '3.9'
+
 services:
   krishi-maitri-ui:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile
     container_name: krishi-maitri-ui
-    ports:
-      - "3000:80"
+    expose:
+      - "80"
     restart: unless-stopped
     env_file:
       - /home/bhautikpithadiya12/krishi-mitri/frontend/.env
@@ -13,7 +15,6 @@ services:
       - NODE_ENV=production
     networks:
       - krishi-network
-
 networks:
   krishi-network:
-    driver: bridge
+    external: true # Important: So Nginx on host can join this network
