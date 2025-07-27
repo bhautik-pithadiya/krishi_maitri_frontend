@@ -35,6 +35,10 @@
     "landingPage": {
         "heroTitle": "भारतीय शेतकऱ्यांना <span class='text-primary'>डिजिटल सोल्यूशन्ससह</span> सक्षम करणे",
         "heroSubtitle": "शेतीमधील तुमचा विश्वासू भागीदार, तुम्हाला हुशारीने वाढण्यास आणि चांगले उत्पन्न मिळविण्यात मदत करण्यासाठी साधने, ज्ञान आणि समुदाय समर्थन प्रदान करतो.",
+        "activeFarmers": "सक्रिय शेतकरी",
+        "expertConsultations": "तज्ञ सल्लामसलत",
+        "villagesCovered": "गावे समाविष्ट",
+        "satisfactionRate": "समाधान दर",
         "getStarted": "सुरुवात करा",
         "learnMore": "अधिक जाणून घ्या",
         "whyChooseTitle": "कृषी मैत्री का निवडावी?",

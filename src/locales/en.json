@@ -35,6 +35,10 @@
     "landingPage": {
         "heroTitle": "Empowering Indian Farmers with <span class='text-primary'>Digital Solutions</span>",
         "heroSubtitle": "Your trusted partner in agriculture, providing tools, knowledge, and community support to help you grow smarter and yield better.",
+        "activeFarmers": "Active Farmers",
+        "expertConsultations": "Expert Consultations",
+        "villagesCovered": "Villages Covered",
+        "satisfactionRate": "Satisfaction Rate",
         "getStarted": "Get Started",
         "learnMore": "Learn More",
         "whyChooseTitle": "Why Choose Krishi Maitri?",

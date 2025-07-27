@@ -35,6 +35,10 @@
     "landingPage": {
         "heroTitle": "ভারতীয় কৃষকদের <span class='text-primary'>ডিজিটাল সমাধান</span> দিয়ে ক্ষমতায়ন",
         "heroSubtitle": "কৃষিতে আপনার বিশ্বস্ত অংশীদার, আপনাকে আরও স্মার্টভাবে বৃদ্ধি পেতে এবং আরও ভাল ফলন পেতে সহায়তা করার জন্য সরঞ্জাম, জ্ঞান এবং সম্প্রদায় সমর্থন প্রদান করে।",
+        "activeFarmers": "সক্রিয় কৃষক",
+        "expertConsultations": "বিশেষজ্ঞ পরামর্শ",
+        "villagesCovered": "গ্রামগুলি আচ্ছাদিত",
+        "satisfactionRate": "সন্তুষ্টির হার",
         "getStarted": "শুরু করুন",
         "learnMore": "আরও জানুন",
         "whyChooseTitle": "কেন কৃষি মৈত্রী বেছে নেবেন?",
