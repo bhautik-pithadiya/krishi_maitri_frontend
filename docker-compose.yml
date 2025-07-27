@@ -13,8 +13,3 @@ services:
       - /home/bhautikpithadiya12/krishi-mitri/frontend/.env
     environment:
       - NODE_ENV=production
-    networks:
-      - krishi-network
-networks:
-  krishi-network:
-    external: true # Important: So Nginx on host can join this network
