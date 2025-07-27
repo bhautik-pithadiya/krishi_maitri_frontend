@@ -200,6 +200,17 @@
       "scheme3Title": "Pradhan Mantri Fasal Bima Yojana",
       "scheme3Description": "Crop insurance scheme providing financial support in case of crop loss."
     },
+    "diseaseDetection": {
+      "title": "Disease Detection",
+      "description": "AI-powered plant disease detection using image analysis to identify and treat crop diseases early.",
+      "features": {
+        "aiPowered": "AI-powered analysis",
+        "imageAnalysis": "Image-based detection",
+        "treatment": "Treatment recommendations",
+        "prevention": "Prevention guidelines"
+      },
+      "button": "Detect Disease"
+    },
     "howItWorks": {
       "title": "How It Works",
       "step1Title": "Choose Service",
@@ -239,6 +250,54 @@
     "transcribing": "Transcribing",
     "clickToTalk": "Click microphone to start talking",
     "notSupported": "Speech recognition not supported in this browser",
-    "clearChat": "Clear Chat"
+    "clearChat": "Clear Chat",
+    "checkingAuth": "Checking authentication...",
+    "authRequired": "Authentication Required",
+    "authMessage": "Please log in to access the Voice Assistant feature"
+  },
+  "diseaseDetection": {
+    "title": "Disease Detection",
+    "subtitle": "Upload plant images for AI-powered disease analysis and get instant treatment recommendations",
+    "cropSelection": "Select Crop Type",
+    "cropPlaceholder": "Choose your crop...",
+    "selectCrop": "Select Crop Type",
+    "selectCropPlaceholder": "Choose your crop...",
+    "uploadTitle": "Upload Plant Image",
+    "uploadInstruction": "Drag and drop or click to upload",
+    "uploadHint": "Supports JPG, PNG, and other image formats",
+    "analyzeButton": "Analyze Image",
+    "analyzing": "Analyzing...",
+    "clearButton": "Clear Image",
+    "resultsTitle": "Analysis Results",
+    "healthyPlant": "Healthy Plant Detected",
+    "diseaseDetected": "Disease Detected",
+    "confidence": "Confidence Level",
+    "treatmentTitle": "Treatment Recommendations",
+    "recommendationTitle": "Recommendations",
+    "preventionTitle": "Prevention Guidelines",
+    "saveReport": "Save Report",
+    "shareReport": "Share Report",
+    "newAnalysis": "New Analysis",
+    "errorTitle": "Analysis Error",
+    "authRequired": "Authentication Required",
+    "authMessage": "Please log in to access the Disease Detection feature",
+    "checkingAuth": "Checking authentication...",
+    "openCamera": "Open Camera",
+    "captureButton": "Capture Photo",
+    "cancelButton": "Cancel",
+    "orText": "OR",
+    "crops": {
+      "rice": "Rice",
+      "wheat": "Wheat", 
+      "corn": "Corn",
+      "tomato": "Tomato",
+      "potato": "Potato",
+      "cotton": "Cotton",
+      "sugarcane": "Sugarcane",
+      "soybean": "Soybean",
+      "groundnut": "Groundnut",
+      "chickpea": "Chickpea",
+      "other": "Other"
+    }
   }
 }

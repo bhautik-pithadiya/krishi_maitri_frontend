@@ -7,6 +7,7 @@ import Community from '../views/Community.vue'
 import Profile from '../views/Profile.vue'
 import Login from '../views/Login.vue'
 import VoiceAssistant from '../views/VoiceAssistant.vue'
+import DiseaseDetection from '../views/DiseaseDetection.vue'
 
 const routes = [
   {
@@ -43,7 +44,14 @@ const routes = [
   {
     path: '/voice-assistant',
     name: 'VoiceAssistant',
-    component: VoiceAssistant
+    component: VoiceAssistant,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/disease-detection',
+    name: 'DiseaseDetection',
+    component: DiseaseDetection,
+    meta: { requiresAuth: true }
   },
   {
     path: '/profile',

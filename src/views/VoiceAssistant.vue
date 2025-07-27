@@ -3,11 +3,16 @@
     <!-- Header -->
     <AppHeader />
 
-    <!-- Main Con                <svg v-if="!isConnected" class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M7 4a3 3 0 6 0v4a3 3 0 11-6 0V4z"/>
-                  <path d="M5.5 9.643a.75.75 0 00-1.5 0V10c0 3.06 2.29 5.585 5.25 5.954V17.5h-1.5a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-1.5v-1.546A6.001 6.001 0 0016 10v-.357a.75.75 0 00-1.5 0V10a4.5 4.5 0 01-9 0v-.357z"/>
-                </svg> -->
-    <main class="container mx-auto px-4 py-8 max-w-4xl">
+    <!-- Authentication Loading -->
+    <div v-if="isCheckingAuth" class="flex items-center justify-center min-h-screen">
+      <div class="text-center">
+        <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto mb-4"></div>
+        <p class="text-gray-600">{{ $t('voiceAssistant.checkingAuth') }}</p>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main v-else class="container mx-auto px-4 py-8 max-w-4xl">
       <!-- Page Header -->
       <div class="text-center mb-8">
         <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
@@ -175,9 +180,27 @@
 
 <script setup>
 import { ref, onMounted, nextTick, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { Conversation } from '@elevenlabs/client'
 import AppHeader from '../components/AppHeader.vue'
 import AppFooter from '../components/AppFooter.vue'
+
+const router = useRouter()
+
+// Authentication check
+const isCheckingAuth = ref(true)
+
+const checkAuthentication = () => {
+  const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true'
+  const authToken = localStorage.getItem('access_token')
+  
+  if (!isAuthenticated || !authToken) {
+    router.push('/login')
+    return false
+  }
+  isCheckingAuth.value = false
+  return true
+}
 
 // Configuration
 const ELEVENLABS_AGENT_ID = import.meta.env.VITE_ELEVENLABS_AGENT_ID || 'demo-agent-id'
@@ -196,6 +219,11 @@ const agentMode = ref('listening')
 let conversation = null
 
 onMounted(async () => {
+  // Check authentication first
+  if (!checkAuthentication()) {
+    return
+  }
+  
   // Check for speech recognition support (for fallback)
   speechSupported.value = 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window
   

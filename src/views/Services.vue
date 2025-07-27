@@ -153,6 +153,35 @@
             </button>
           </div>
         </div>
+
+        <!-- Disease Detection -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+          <div class="h-48 bg-gradient-to-br from-orange-200 to-orange-300 flex items-center justify-center">
+            <svg class="w-16 h-16 text-orange-700" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.4 8.5l.8-2.3c.2-.7-.2-1.4-.9-1.6L18.8 4c-.7-.2-1.4.2-1.6.9l-.8 2.3-2.1-.7c-.7-.2-1.4.2-1.6.9l-1.4 4c-.2.7.2 1.4.9 1.6l.8.3-1.2 3.4c-.2.7.2 1.4.9 1.6l1.5.5c.7.2 1.4-.2 1.6-.9l1.2-3.4.8.3c.7.2 1.4-.2 1.6-.9l1.4-4c.2-.7-.2-1.4-.9-1.6l-2.1-.7z"/>
+              <path d="M12 16c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+              <path d="M7 12c0-2.8 2.2-5 5-5V5c-3.9 0-7 3.1-7 7s3.1 7 7 7v-2c-2.8 0-5-2.2-5-5z"/>
+            </svg>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-3">{{ $t('services.diseaseDetection.title') }}</h3>
+            <p class="text-gray-600 mb-4">
+              {{ $t('services.diseaseDetection.description') }}
+            </p>
+            <ul class="text-sm text-gray-600 mb-6 space-y-1">
+              <li>• {{ $t('services.diseaseDetection.features.aiPowered') }}</li>
+              <li>• {{ $t('services.diseaseDetection.features.imageAnalysis') }}</li>
+              <li>• {{ $t('services.diseaseDetection.features.treatment') }}</li>
+              <li>• {{ $t('services.diseaseDetection.features.prevention') }}</li>
+            </ul>
+            <button 
+              @click="navigateToDiseaseDetection"
+              class="w-full bg-primary text-white py-3 rounded-lg hover:bg-green-600 transition-colors font-semibold"
+            >
+              {{ $t('services.diseaseDetection.button') }}
+            </button>
+          </div>
+        </div>
       </div>
 
       <!-- How It Works Section -->
@@ -217,6 +246,10 @@ const navigateToMarketPrices = () => {
 
 const navigateToVoiceAssistant = () => {
   router.push('/voice-assistant')
+}
+
+const navigateToDiseaseDetection = () => {
+  router.push('/disease-detection')
 }
 
 // Modal methods

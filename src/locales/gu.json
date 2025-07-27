@@ -200,6 +200,17 @@
       "scheme3Title": "પ્રધાનમંત્રી ફસલ બીમા યોજના",
       "scheme3Description": "પાકના નુકસાનના કિસ્સામાં આર્થિક સહાય પ્રદાન કરતી પાક વીમા યોજના."
     },
+    "diseaseDetection": {
+      "title": "રોગ શોધ",
+      "description": "પાકના રોગોની વહેલી ઓળખ અને સારવાર માટે ઇમેજ વિશ્લેષણનો ઉપયોગ કરતી AI-સંચાલિત પ્લાન્ટ રોગ શોધ.",
+      "features": {
+        "aiPowered": "AI-સંચાલિત વિશ્લેષણ",
+        "imageAnalysis": "ઇમેજ-આધારિત ડિટેક્શન",
+        "treatment": "સારવાર ભલામણો",
+        "prevention": "નિવારણ માર્ગદર્શિકા"
+      },
+      "button": "રોગ શોધો"
+    },
     "howItWorks": {
       "title": "તે કેવી રીતે કામ કરે છે",
       "step1Title": "સેવા પસંદ કરો",
@@ -239,6 +250,54 @@
     "transcribing": "ટ્રાન્સક્રિપ્ટ કરી રહ્યું છે",
     "clickToTalk": "વાત કરવા માટે માઇક્રોફોન પર ક્લિક કરો",
     "notSupported": "આ બ્રાઉઝરમાં સ્પીચ રેકગ્નિશન સપોર્ટેડ નથી",
-    "clearChat": "ચેટ સાફ કરો"
+    "clearChat": "ચેટ સાફ કરો",
+    "checkingAuth": "પ્રમાણીકરણ તપાસી રહ્યું છે...",
+    "authRequired": "પ્રમાણીકરણ જરૂરી",
+    "authMessage": "વૉઇસ આસિસ્ટન્ટ સુવિધાનો ઉપયોગ કરવા માટે કૃપા કરીને લોગ ઇન કરો"
+  },
+  "diseaseDetection": {
+    "title": "રોગ શોધ",
+    "subtitle": "AI-સંચાલિત રોગ વિશ્લેષણ માટે પ્લાન્ટ ઇમેજ અપલોડ કરો અને તાત્કાલિક સારવાર ભલામણો મેળવો",
+    "cropSelection": "પાક પ્રકાર પસંદ કરો",
+    "cropPlaceholder": "તમારો પાક પસંદ કરો...",
+    "selectCrop": "પાક પ્રકાર પસંદ કરો",
+    "selectCropPlaceholder": "તમારો પાક પસંદ કરો...",
+    "uploadTitle": "પ્લાન્ટ ઇમેજ અપલોડ કરો",
+    "uploadInstruction": "ડ્રેગ અને ડ્રોપ કરો અથવા અપલોડ કરવા માટે ક્લિક કરો",
+    "uploadHint": "JPG, PNG અને અન્ય ઇમેજ ફોર્મેટ્સ સપોર્ટ કરે છે",
+    "analyzeButton": "ઇમેજનું વિશ્લેષણ કરો",
+    "analyzing": "વિશ્લેષણ કરી રહ્યું છે...",
+    "clearButton": "ઇમેજ સાફ કરો",
+    "resultsTitle": "વિશ્લેષણના પરિણામો",
+    "healthyPlant": "તંદુરસ્ત પ્લાન્ટ મળ્યું",
+    "diseaseDetected": "રોગ મળ્યો",
+    "confidence": "વિશ્વાસ સ્તર",
+    "treatmentTitle": "સારવાર ભલામણો",
+    "recommendationTitle": "ભલામણો",
+    "preventionTitle": "નિવારણ માર્ગદર્શિકા",
+    "saveReport": "રિપોર્ટ સેવ કરો",
+    "shareReport": "રિપોર્ટ શેર કરો",
+    "newAnalysis": "નવું વિશ્લેષણ",
+    "errorTitle": "વિશ્લેષણ ભૂલ",
+    "authRequired": "પ્રમાણીકરણ જરૂરી",
+    "authMessage": "રોગ શોધ સુવિધાનો ઉપયોગ કરવા માટે કૃપા કરીને લોગ ઇન કરો",
+    "checkingAuth": "પ્રમાણીકરણ તપાસી રહ્યું છે...",
+    "openCamera": "કેમેરા ખોલો",
+    "captureButton": "ફોટો લો",
+    "cancelButton": "રદ કરો",
+    "orText": "અથવા",
+    "crops": {
+      "rice": "ચોખા",
+      "wheat": "ઘઉં",
+      "corn": "મકાઈ", 
+      "tomato": "ટામેટાં",
+      "potato": "બટેટા",
+      "cotton": "કપાસ",
+      "sugarcane": "શેરડી",
+      "soybean": "સોયાબીન",
+      "groundnut": "મગફળી",
+      "chickpea": "ચણા",
+      "other": "અન્ય"
+    }
   }
 }
