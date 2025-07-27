@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   krishi-maitri-ui:
     build: 
@@ -9,30 +7,12 @@ services:
     ports:
       - "3000:80"
     restart: unless-stopped
+    env_file:
+      - /home/bhautikpithadiya12/krishi-mitri/frontend/.env
     environment:
       - NODE_ENV=production
     networks:
       - krishi-network
-
-  # Optional: Add development service
-  krishi-maitri-dev:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-      target: development
-    container_name: krishi-maitri-ui-dev
-    ports:
-      - "5173:5173"
-    volumes:
-      - .:/app
-      - /app/node_modules
-    environment:
-      - NODE_ENV=development
-    command: npm run dev
-    networks:
-      - krishi-network
-    profiles:
-      - dev
 
 networks:
   krishi-network:
