@@ -6,8 +6,10 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: krishi-maitri-ui
+    port:
+      - "3000:80"
     expose:
-      - "3000"
+      - "80"
     restart: unless-stopped
     env_file:
       - /home/bhautikpithadiya12/krishi-mitri/frontend/.env
