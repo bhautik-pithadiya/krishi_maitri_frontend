@@ -8,19 +8,17 @@
       <div class="container mx-auto px-4">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div class="space-y-8">
-            <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">
-              Empowering Farmers with 
-              <span class="text-primary">Digital Tools</span>
+            <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight" v-html="$t('landingPage.heroTitle')">
             </h1>
             <p class="text-lg text-gray-600 leading-relaxed">
-              Join thousands of farmers who are transforming their agricultural practices with our comprehensive digital platform. Get expert advice, market insights, and government scheme updates all in one place.
+              {{ $t('landingPage.heroSubtitle') }}
             </p>
             <div class="flex justify-start">
               <router-link 
                 to="/dashboard"
                 class="bg-primary text-white px-8 py-4 rounded-lg hover:bg-green-600 transition-colors font-semibold text-center"
               >
-                Get Started
+                {{ $t('landingPage.getStarted') }}
               </router-link>
             </div>
           </div>
@@ -34,7 +32,6 @@
                   class="w-full h-full object-cover rounded-lg"
                 />
               </div>
-              <p class="mt-4 text-gray-600 italic">Empowering farmers with modern technology</p>
             </div>
           </div>
         </div>
@@ -46,10 +43,10 @@
       <div class="container mx-auto px-4">
         <div class="text-center mb-16">
           <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-            Why Choose Krishi Maitri?
+            {{ $t('landingPage.whyChooseTitle') }}
           </h2>
           <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-            Our platform provides comprehensive solutions to help farmers make informed decisions and improve their agricultural outcomes.
+            {{ $t('landingPage.whyChooseSubtitle') }}
           </p>
         </div>
 
@@ -61,15 +58,15 @@
                 <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
             </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-4">Expert Advisory</h3>
+            <h3 class="text-xl font-bold text-gray-900 mb-4">{{ $t('landingPage.expertAdvisoryTitle') }}</h3>
             <p class="text-gray-600 mb-6">
-              Get personalized advice from agricultural experts. Soil testing, crop recommendations, and pest management solutions.
+              {{ $t('landingPage.expertAdvisoryDescription') }}
             </p>
             <router-link 
               to="/services"
               class="text-primary font-semibold hover:text-green-600 transition-colors"
             >
-              Learn More →
+              {{ $t('landingPage.learnMore') }}
             </router-link>
           </div>
 
@@ -80,15 +77,15 @@
                 <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
               </svg>
             </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-4">Real-time Market Prices</h3>
+            <h3 class="text-xl font-bold text-gray-900 mb-4">{{ $t('landingPage.marketPricesTitle') }}</h3>
             <p class="text-gray-600 mb-6">
-              Access live market prices for crops across different regions. Make informed decisions about when and where to sell.
+              {{ $t('landingPage.marketPricesDescription') }}
             </p>
             <router-link 
               to="/market-prices"
               class="text-primary font-semibold hover:text-green-600 transition-colors"
             >
-              View Prices →
+              {{ $t('landingPage.viewPrices') }}
             </router-link>
           </div>
 
@@ -100,15 +97,15 @@
                 <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"/>
               </svg>
             </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-4">Government Schemes</h3>
+            <h3 class="text-xl font-bold text-gray-900 mb-4">{{ $t('landingPage.schemesTitle') }}</h3>
             <p class="text-gray-600 mb-6">
-              Stay updated with the latest government schemes and subsidies. Apply for benefits and track your applications.
+              {{ $t('landingPage.schemesDescription') }}
             </p>
             <a 
               href="#"
               class="text-primary font-semibold hover:text-green-600 transition-colors"
             >
-              Explore Schemes →
+              {{ $t('landingPage.exploreSchemes') }}
             </a>
           </div>
         </div>
@@ -121,19 +118,19 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <div>
             <div class="text-4xl font-bold mb-2">50K+</div>
-            <div class="text-green-100">Active Farmers</div>
+            <div class="text-green-100">{{ $t('landingPage.activeFarmers') }}</div>
           </div>
           <div>
             <div class="text-4xl font-bold mb-2">1000+</div>
-            <div class="text-green-100">Expert Consultations</div>
+            <div class="text-green-100">{{ $t('landingPage.expertConsultations') }}</div>
           </div>
           <div>
             <div class="text-4xl font-bold mb-2">500+</div>
-            <div class="text-green-100">Villages Covered</div>
+            <div class="text-green-100">{{ $t('landingPage.villagesCovered') }}</div>
           </div>
           <div>
             <div class="text-4xl font-bold mb-2">95%</div>
-            <div class="text-green-100">Satisfaction Rate</div>
+            <div class="text-green-100">{{ $t('landingPage.satisfactionRate') }}</div>
           </div>
         </div>
       </div>
@@ -143,16 +140,16 @@
     <section class="py-20 bg-earth-50">
       <div class="container mx-auto px-4 text-center">
         <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
-          Ready to Transform Your Farming?
+          {{ $t('landingPage.ctaTitle') }}
         </h2>
         <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-          Join our community of progressive farmers and start your digital agriculture journey today.
+          {{ $t('landingPage.ctaSubtitle') }}
         </p>
         <router-link 
           to="/login"
           class="bg-primary text-white px-8 py-4 rounded-lg hover:bg-green-600 transition-colors font-semibold inline-block"
         >
-          Join Now - It's Free
+          {{ $t('landingPage.joinNow') }}
         </router-link>
       </div>
     </section>

@@ -41,14 +41,11 @@
           <select v-model="selectedLanguage" @change="updateLanguage"
             class="px-6 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary text-sm">
             <option value="en">EN</option>
-            <option value="hi">हि</option>
-            <option value="bn">বা</option>
-            <option value="te">తె</option>
+            <option value="gu">ગુ</option>
             <option value="ta">த</option>
+            <option value="kn">ಕನ್</option>
             <option value="mr">म</option>
-            <option value="gu">ગ</option>
-            <option value="kn">ಕ</option>
-            <option value="pa">ਪ</option>
+            <option value="bn">বা</option>
           </select>
 
           <template v-if="!isAuthenticated">
@@ -110,14 +107,11 @@
               <select v-model="selectedLanguage" @change="updateLanguage"
                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary">
                 <option value="en">English</option>
-                <option value="hi">हिंदी (Hindi)</option>
-                <option value="bn">বাংলা (Bengali)</option>
-                <option value="te">తెలుగు (Telugu)</option>
-                <option value="ta">தமிழ் (Tamil)</option>
-                <option value="mr">मराठी (Marathi)</option>
                 <option value="gu">ગુજરાતી (Gujarati)</option>
+                <option value="ta">தமிழ் (Tamil)</option>
                 <option value="kn">ಕನ್ನಡ (Kannada)</option>
-                <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+                <option value="mr">मराठी (Marathi)</option>
+                <option value="bn">বাংলা (Bengali)</option>
               </select>
             </div>
 

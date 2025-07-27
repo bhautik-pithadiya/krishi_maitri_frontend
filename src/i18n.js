@@ -1,6 +1,10 @@
 import { createI18n } from 'vue-i18n'
 import en from './locales/en.json'
 import gu from './locales/gu.json'
+import ta from './locales/ta.json'
+import kn from './locales/kn.json'
+import mr from './locales/mr.json'
+import bn from './locales/bn.json'
 
 const savedUser = localStorage.getItem('user')
 let savedLang = 'en'
@@ -21,7 +25,11 @@ const i18n = createI18n({
   globalInjection: true,
   messages: {
     en,
-    gu
+    gu,
+    ta,
+    kn,
+    mr,
+    bn
   }
 })
 

@@ -9,7 +9,7 @@
       <div v-if="loading" class="flex justify-center items-center min-h-96">
         <div class="text-center">
           <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p class="text-gray-600">Loading your profile...</p>
+          <p class="text-gray-600">{{ $t('profile.loading') }}</p>
         </div>
       </div>
 
@@ -19,13 +19,13 @@
           <svg class="h-12 w-12 text-red-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.694-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z"/>
           </svg>
-          <h3 class="text-lg font-medium text-red-800 mb-2">Unable to Load Profile</h3>
+          <h3 class="text-lg font-medium text-red-800 mb-2">{{ $t('profile.errorTitle') }}</h3>
           <p class="text-red-600 mb-4">{{ error }}</p>
           <button 
             @click="fetchUserProfile"
             class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
           >
-            Try Again
+            {{ $t('profile.tryAgain') }}
           </button>
         </div>
       </div>
@@ -44,7 +44,7 @@
               <p class="text-gray-600">{{ user.location }}</p>
               <div class="mt-4">
                 <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
-                  Verified Farmer
+                  {{ $t('profile.verifiedFarmer') }}
                 </span>
               </div>
             </div>
@@ -52,19 +52,19 @@
             <!-- Quick Stats -->
             <div class="space-y-4 mb-6">
               <div class="flex justify-between items-center">
-                <span class="text-gray-600">Member Since</span>
+                <span class="text-gray-600">{{ $t('profile.memberSince') }}</span>
                 <span class="font-medium">{{ user.memberSince }}</span>
               </div>
               <div class="flex justify-between items-center">
-                <span class="text-gray-600">Services Used</span>
+                <span class="text-gray-600">{{ $t('profile.servicesUsed') }}</span>
                 <span class="font-medium">{{ user.servicesUsed }}</span>
               </div>
               <div class="flex justify-between items-center">
-                <span class="text-gray-600">Questions Asked</span>
+                <span class="text-gray-600">{{ $t('profile.questionsAsked') }}</span>
                 <span class="font-medium">{{ user.questionsAsked }}</span>
               </div>
               <div class="flex justify-between items-center">
-                <span class="text-gray-600">Helpful Answers</span>
+                <span class="text-gray-600">{{ $t('profile.helpfulAnswers') }}</span>
                 <span class="font-medium">{{ user.helpfulAnswers }}</span>
               </div>
             </div>
@@ -77,7 +77,7 @@
           <div class="bg-white rounded-xl shadow-md">
             <div class="p-6 border-b border-gray-200">
               <div class="flex justify-between items-center">
-                <h2 class="text-xl font-semibold text-gray-900">Profile Information</h2>
+                <h2 class="text-xl font-semibold text-gray-900">{{ $t('profile.profileInformation') }}</h2>
                 <!-- Edit Profile button temporarily hidden -->
                 <!-- <button 
                   @click="toggleEdit"
@@ -91,7 +91,7 @@
               <form @submit.prevent="saveProfile">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ $t('profile.fullName') }}</label>
                     <input 
                       v-model="editableUser.name"
                       type="text" 
@@ -100,7 +100,7 @@
                     >
                   </div>
                   <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Mobile Number</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ $t('profile.mobileNumber') }}</label>
                     <input 
                       v-model="editableUser.mobile"
                       type="tel" 
@@ -109,7 +109,7 @@
                     >
                   </div>
                   <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ $t('profile.emailAddress') }}</label>
                     <input 
                       v-model="editableUser.email"
                       type="email" 
@@ -118,9 +118,9 @@
                     >
                   </div>
                   <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Farm Location</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ $t('profile.farmLocation') }}</label>
                     <div v-if="!isEditing" class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-600">
-                      {{ editableUser.location || 'No location set' }}
+                      {{ editableUser.location || $t('profile.noLocationSet') }}
                     </div>
                     <div v-else class="space-y-2">
                       <button
@@ -136,10 +136,10 @@
                         <svg v-else class="h-5 w-5 text-gray-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                           <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
                         </svg>
-                        {{ gettingLocation ? 'Getting Location...' : (editableUser.location ? 'Update Location' : 'Get Current Location') }}
+                        {{ gettingLocation ? $t('profile.gettingLocation') : (editableUser.location ? $t('profile.updateLocation') : $t('profile.getCurrentLocation')) }}
                       </button>
                       <div v-if="editableUser.location" class="text-sm text-gray-600 bg-green-50 p-2 rounded">
-                        📍 Location: {{ editableUser.location }}
+                        📍 {{ $t('profile.locationLabel') }}: {{ editableUser.location }}
                       </div>
                       <div v-if="locationError" class="text-sm text-red-600 bg-red-50 p-2 rounded">
                         ❌ {{ locationError }}
@@ -147,13 +147,13 @@
                     </div>
                   </div>
                   <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">State</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ $t('profile.state') }}</label>
                     <select 
                       v-model="editableUser.state"
                       :disabled="!isEditing"
                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary disabled:bg-gray-100"
                     >
-                      <option value="">Select State</option>
+                      <option value="">{{ $t('profile.selectState') }}</option>
                       <option value="Punjab">Punjab</option>
                       <option value="Haryana">Haryana</option>
                       <option value="Uttar Pradesh">Uttar Pradesh</option>
@@ -167,7 +167,7 @@
                     </select>
                   </div>
                   <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Farm Size (acres)</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ $t('profile.farmSize') }}</label>
                     <input 
                       v-model="editableUser.farmSize"
                       type="number" 
@@ -178,12 +178,12 @@
                 </div>
                 
                 <div class="mt-6">
-                  <label class="block text-sm font-medium text-gray-700 mb-2">Primary Crops</label>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">{{ $t('profile.primaryCrops') }}</label>
                   <textarea 
                     v-model="editableUser.primaryCrops"
                     rows="3" 
                     :disabled="!isEditing"
-                    placeholder="e.g., Rice, Wheat, Sugarcane"
+                    :placeholder="$t('profile.primaryCropsPlaceholder')"
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-primary focus:border-primary disabled:bg-gray-100"
                   ></textarea>
                 </div>
@@ -193,14 +193,14 @@
                     type="submit"
                     class="bg-primary text-white px-6 py-2 rounded-md hover:bg-green-600 transition-colors"
                   >
-                    Save Changes
+                    {{ $t('profile.saveChanges') }}
                   </button>
                   <button 
                     type="button"
                     @click="cancelEdit"
                     class="border border-gray-300 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-50 transition-colors"
                   >
-                    Cancel
+                    {{ $t('profile.cancel') }}
                   </button>
                 </div>
               </form>
@@ -210,7 +210,7 @@
           <!-- Recent Activity -->
           <div class="bg-white rounded-xl shadow-md">
             <div class="p-6 border-b border-gray-200">
-              <h2 class="text-xl font-semibold text-gray-900">Recent Activity</h2>
+              <h2 class="text-xl font-semibold text-gray-900">{{ $t('profile.recentActivity') }}</h2>
             </div>
             <div class="p-6">
               <div class="space-y-4">
@@ -234,7 +234,7 @@
           <!-- Services History -->
           <div class="bg-white rounded-xl shadow-md">
             <div class="p-6 border-b border-gray-200">
-              <h2 class="text-xl font-semibold text-gray-900">Services History</h2>
+              <h2 class="text-xl font-semibold text-gray-900">{{ $t('profile.servicesHistory') }}</h2>
             </div>
             <div class="p-6">
               <div class="space-y-4">
@@ -257,7 +257,7 @@
                   to="/services"
                   class="text-primary hover:text-green-600 font-medium"
                 >
-                  View All Services →
+                  {{ $t('profile.viewAllServices') }}
                 </router-link>
               </div>
             </div>
